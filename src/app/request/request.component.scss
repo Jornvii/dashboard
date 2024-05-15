@@ -119,6 +119,7 @@
         }
       }
     }
+
   }
 }
 
@@ -140,6 +141,76 @@
     }
   }
 }
+
+.table-container {
+  max-width: 100%;
+  margin: 0 auto;
+
+  h3 {
+    text-align: center;
+    font-weight: 900;
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+      // padding: 12px 20px;
+      text-align: left;
+      border-bottom: 1px solid #a2a2a2;
+    }
+
+    th {
+      background-color: #b9d0d7;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 14px;
+      color: #333;
+    }
+
+    td {
+      font-size: 14px;
+      color: #555;
+    }
+
+    tr {
+      transition: background-color 0.3s;
+    }
+
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    .mat-icon-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+
+      // Add the color to the icon
+      .delete-icon {
+        color: red !important;
+      }
+    }
+  }
+
+  .mat-paginator {
+    // margin-top: 20px;
+    display: flex;
+    justify-content: center;
+
+    button {
+      margin: 0 5px;
+    }
+  }
+}
+
+
+
+
 
 // Responsive adjustments
 // Responsive adjustments for tablets and below
@@ -214,3 +285,6 @@
     }
   }
 }
+
+
+

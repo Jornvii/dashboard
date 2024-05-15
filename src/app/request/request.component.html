@@ -86,6 +86,100 @@
         <input class="red-button" type="button" value="Clear" />
       </div>
     </form>
+
+
+    <div class="table-container">
+      <h3 style="text-align: center; font-weight: 900; font-size: 18px;">Your Request</h3>
+
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+        <!-- No. Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <!-- Part No Column -->
+        <ng-container matColumnDef="PartNo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Part No </th>
+          <td mat-cell *matCellDef="let element"> {{element.PartNo}} </td>
+        </ng-container>
+
+        <!-- Rev Column -->
+        <ng-container matColumnDef="Rev">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Rev </th>
+          <td mat-cell *matCellDef="let element"> {{element.Rev}} </td>
+        </ng-container>
+
+        <!-- Process Column -->
+        <ng-container matColumnDef="process">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Process </th>
+          <td mat-cell *matCellDef="let element"> {{element.process}} </td>
+        </ng-container>
+
+        <!-- Division Column -->
+        <ng-container matColumnDef="Division">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Division </th>
+          <td mat-cell *matCellDef="let element"> {{element.Division}} </td>
+        </ng-container>
+
+        <!-- Fac Column -->
+        <ng-container matColumnDef="Fac">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Fac </th>
+          <td mat-cell *matCellDef="let element"> {{element.Fac}} </td>
+        </ng-container>
+
+        <!-- MC Group Column -->
+        <ng-container matColumnDef="MCGroup">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> MC Group </th>
+          <td mat-cell *matCellDef="let element"> {{element.MCGroup}} </td>
+        </ng-container>
+
+        <!-- Mc No Column -->
+        <ng-container matColumnDef="McNo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Mc No </th>
+          <td mat-cell *matCellDef="let element"> {{element.McNo}} </td>
+        </ng-container>
+
+        <!-- UseFor Column -->
+        <ng-container matColumnDef="UseFor">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> UseFor </th>
+          <td mat-cell *matCellDef="let element"> {{element.UseFor}} </td>
+        </ng-container>
+
+        <!-- Require Date Column -->
+        <ng-container matColumnDef="RequireDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Require Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.RequireDate}} </td>
+        </ng-container>
+
+        <!-- Request by Column -->
+        <ng-container matColumnDef="reqby">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Request by </th>
+          <td mat-cell *matCellDef="let element"> {{element.reqby}} </td>
+        </ng-container>
+
+        <!-- Delete Button Column -->
+        <ng-container matColumnDef="setgauge">
+          <th mat-header-cell *matHeaderCellDef> Delete </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="onDelete(element)">
+              <i class="fas fa-trash-alt delete-icon"></i>
+            </button>
+          </td>
+        </ng-container>
+
+
+        <!-- Table rows -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+
+      <mat-paginator [pageSizeOptions]="[5, 25]" showFirstLastButtons></mat-paginator>
+
+
+
+    </div>
   </div>
-  <app-footer></app-footer>
+
 </div>

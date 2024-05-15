@@ -19,7 +19,6 @@ import { ConfirmComponent } from './confirm/confirm.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
-import { HistoryComponent } from './history/history.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { LastFewTransactionsComponent } from './last-few-transactions/last-few-transactions.component';
 import { LoginComponent } from './login/login.component';
@@ -27,7 +26,6 @@ import { MainComponent } from './main/main.component';
 import { MaterialModule } from './material.module';
 import { RegisterComponent } from './register/register.component';
 import { RequestComponent } from './request/request.component';
-import { ReturnComponent } from './issue/return.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 
 
