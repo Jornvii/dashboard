@@ -1,13 +1,8 @@
 <div class="wrapper">
   <div class="container">
     <h1>Form Request Gauge</h1>
-    <br />
-    <form action="" id="ft-form" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
-      <!-- <label >Doc No : ...............</label><br><br> -->
-
+    <form action="SEND ADDRESS" id="ft-form" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
       <fieldset>
-
-
         <div class="two-cols">
           <label>
             Division
@@ -19,94 +14,78 @@
               </mat-select>
             </div>
           </label>
-
-
           <label>
             Fac
             <div class="custom-select">
               <mat-select [(value)]="selectedFac">
-                <mat-option *ngFor="let Fac of Facs" [value]="Fac.Fac">
-                  {{ Fac.viewValue }}
+                <mat-option *ngFor="let fac of facs" [value]="fac.fac">
+                  {{ fac.viewValue }}
                 </mat-option>
               </mat-select>
             </div>
           </label>
         </div>
       </fieldset>
-
-
       <fieldset>
         <div class="two-cols">
           <label>
             Part No *
-            <input type="text" name="First name" placeholder="Enter part number" required />
+            <input type="text" name="partNo" placeholder="Enter part number" required />
           </label>
           <label>
             Rev Part *
-            <input name="Family name" placeholder="Drawing" required />
+            <input name="revPart" placeholder="Drawing" required />
           </label>
         </div>
-
         <div class="two-cols">
           <label>
             MC Group
-            <input type="text" name="mc" placeholder="Enter Machine Group Name" required />
+            <input type="text" name="mcGroup" placeholder="Enter Machine Group Name" required />
           </label>
           <label>
             MC.No
-            <input type="text" name="mcno" placeholder="Machine Number" required />
+            <input type="text" name="mcNo" placeholder="Machine Number" required />
           </label>
         </div>
         <div class="two-cols">
           <label>
             Process
-            <input type="text" name="section" placeholder="Enter Process" required />
-          </label>
-          <label>
-            Section
-            <input type="text" name="Section" placeholder="Section" required />
-          </label>
-        </div>
-
-
-
-
-        <div class="two-cols">
-          <label>
-            Use for
             <div class="custom-select">
-              <mat-select [(value)]="selectedusefor">
-                <mat-option *ngFor="let usefor of usefors" [value]="usefor.usefor">
-                  {{ usefor.viewusefor }}
+              <mat-select [(value)]="selectedProcess">
+                <mat-option *ngFor="let process of processes" [value]="process.process">
+                  {{ process.viewProcess }}
                 </mat-option>
               </mat-select>
             </div>
           </label>
-
+          <label>
+            Section
+            <input type="time" name="section" required />
+          </label>
+        </div>
+        <div class="two-cols">
+          <label>
+            Use for
+            <div class="custom-select">
+              <mat-select [(value)]="selectedUseFor">
+                <mat-option *ngFor="let useFor of useFors" [value]="useFor.useFor">
+                  {{ useFor.viewUseFor }}
+                </mat-option>
+              </mat-select>
+            </div>
+          </label>
           <label>
             Date of Req.
-            <input type="date" name="Date of birth" required />
+            <input type="date" name="dateOfReq" required />
           </label>
-          <!-- <label>
-            Request by
-            <input type="text" name="requester" placeholder="Your Full Name" required />
-          </label> -->
         </div>
-        <label>
-          Other
-          <textarea type="text" name="Address"></textarea>
-        </label>
 
       </fieldset>
-
       <div class="btns">
-
         <button type="submit" class="sub-button">Submit ➤</button>
-        <input class="btns-clear" type="button" value="clear" />
+        <input class="red-button" type="button" value="Clear" />
       </div>
     </form>
   </div>
-
-  <br /><br />
   <app-footer></app-footer>
 </div>
