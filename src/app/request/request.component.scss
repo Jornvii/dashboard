@@ -1,0 +1,250 @@
+.container {
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  padding: 5px;
+}
+h1 {
+  text-align: center;
+}
+
+#ft-form {
+  font-family: Arial, sans-serif;
+  max-width: 700px;
+  margin: 0 auto;
+
+  fieldset {
+    margin-bottom: 20px;
+    border: none;
+
+    legend {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      input[type="file"] {
+        padding: 6px;
+      }
+    }
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+
+      label {
+        margin-bottom: 10px;
+      }
+    }
+
+    p {
+      margin-top: 5px;
+      font-size: 14px;
+    }
+  }
+
+  .sub-button {
+    width: 150px;
+    margin: 15px;
+    background-color: #1f8bff;
+    border: none;
+    color: black ;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transition effect on hover */
+
+    &:hover {
+      background-color: #459fff; /* Button background color on hover */
+      color: #000;
+      font-weight: 700;
+
+    }
+  }
+  .btns-clear {
+    margin-left: 20px;
+    text-align: center;
+    padding: 10px 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 16px;
+
+    &:hover {
+      background-color: rgb(214, 8, 8);
+    }
+  }
+}
+
+// Hide the hidden field for bots
+input[name="_gotcha"] {
+  display: none;
+}
+
+//request
+select[name="Application for"] {
+  // Select element styles
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 16px;
+  width: 100px; // Adjust width as needed
+  background-color: #fff;
+  color: #333;
+
+  &:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+
+  & option {
+    // Option styles
+    background-color: #f2f2f2;
+    color: #333;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 10px;
+    padding: 100px;
+
+    &:hover {
+      background-color: #e0e0e0;
+    }
+  }
+
+  & option:checked {
+    // Selected option styles
+    background-color: #ccc;
+  }
+}
+
+//css tryy
+/* Style for the two-cols container */
+.two-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px; /* Adjust the gap as per your requirement */
+  align-items: center;
+}
+
+/* Style for the h4 element */
+.two-cols h4 {
+  grid-column: 1 / -1; /* Spanning the entire width of the container */
+}
+
+/* Style for the mat-form-field */
+.mat-form-field {
+  width: 100%; /* Adjust the width as per your requirement */
+}
+
+/* Style for the input field */
+input[name="Family name"] {
+  width: calc(100% - 10px); /* Adjust the width as per your requirement */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+// @media screen and (max-width: 1024px) {
+//   .container{
+//     height: 80vh;
+
+// }
+
+// @media screen and (max-width: 576px) {
+//   .main-container .box1 p,
+//   .main-container .box2 p,
+//   .main-container .box3 p {
+//     font-size: 0.5em; // Further adjust font size for even smaller screens
+//   }
+// }
+// .custom-select {
+//   min-width: 280px;
+//   position: relative;
+// }
+
+select {
+  appearance: none;
+  /*  safari  */
+  -webkit-appearance: none;
+  /*  other styles for aesthetics */
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.675em 6em 0.675em 1em;
+  background-color: #fff;
+  border: 1px solid #caced1;
+  border-radius: 0.25rem;
+  color: #000;
+  cursor: pointer;
+}
+
+.custom-select::before,
+.custom-select::after {
+  --size: 0.3rem;
+  content: "";
+  position: absolute;
+  right: 1rem;
+  pointer-events: none;
+}
+
+.custom-select::before {
+  border-left: var(--size) solid transparent;
+  border-right: var(--size) solid transparent;
+  border-bottom: var(--size) solid black;
+  top: 40%;
+}
+
+.custom-select::after {
+  border-left: var(--size) solid transparent;
+  border-right: var(--size) solid transparent;
+  border-top: var(--size) solid black;
+  top: 55%;
+}
+
+.custom-select {
+  // Styles for the mat-select
+  mat-select {
+    // Example styles
+    border: 1px solid #1976d2;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #f5f5f5;
+
+    // Styles for the mat-option
+    mat-option {
+      color: #1976d2;
+      padding: 10px;
+
+      // Hover styles
+      &:hover {
+        background-color: lighten(#1976d2, 40%);
+      }
+
+      // Selected option styles
+      &.mat-selected {
+        background-color: #1976d2;
+        color: white;
+      }
+    }
+  }
+}

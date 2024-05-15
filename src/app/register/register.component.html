@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="header">
+    <!-- <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Minebea_Logo.svg/2560px-Minebea_Logo.svg.png"
+      alt="mnb logo"
+    /> -->
+    <h1>Registration</h1>
+  </div>
+
+
+  <mat-card>
+
+
+    <mat-card-content>
+      <form class="example-form" [formGroup]="registerform" (ngSubmit)="proceedregistration()">
+        <mat-form-field class="example-full-width">
+          <mat-label>Emp.ID</mat-label>
+          <input matInput formControlName="id" />
+        </mat-form-field>
+        <div>
+          <mat-radio-group formControlName="gender" aria-label="Gender">
+            <mat-radio-button value="male">Male</mat-radio-button>
+            <mat-radio-button value="female">Female</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <mat-form-field class="example-full-width">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" />
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" />
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>Password</mat-label>
+          <input type="password" matInput formControlName="password" />
+        </mat-form-field>
+        <div class="btn-log">
+          <button mat-raised-button color="primary" style="margin: 10px;">Register</button>
+          <a routerLink="/login"><button mat-raised-button color="accent">Back to login</button></a>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
