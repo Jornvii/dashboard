@@ -123,16 +123,15 @@
   }
 
 
-  ///table style for table
+  // /table style for table
   .table-container {
-    overflow-x: auto; /* Enable horizontal scrolling */
+    overflow-x: auto;
     max-width: 100%;
 
   }
 
   table {
-    width: 100%; /* Ensure table takes up full width of its container */
-    // Your existing table styles...
+    width: 100%;
   }
 
 }
