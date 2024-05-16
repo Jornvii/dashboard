@@ -121,8 +121,46 @@
     }
 
   }
-}
 
+
+  ///table style for table
+  .table-container {
+    overflow-x: auto; /* Enable horizontal scrolling */
+    max-width: 100%;
+
+  }
+
+  table {
+    width: 100%; /* Ensure table takes up full width of its container */
+    // Your existing table styles...
+  }
+
+}
+.sub-button {
+  width: 160px;
+  margin: 15px;
+  background-color: #1f8bff;
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  /* Transition effect on hover */
+
+  &:hover {
+    background-color: #459fff;
+    /* Button background color on hover */
+    color: #000;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    transform: translateY(-3px);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+  }
+}
 // Responsive adjustments
 @media (max-width: 768px) {
   .wrapper {
@@ -167,7 +205,7 @@
       background-color: #b9d0d7;
       font-weight: bold;
       text-transform: uppercase;
-      font-size: 14px;
+      font-size: 12px;
       color: #333;
     }
 
