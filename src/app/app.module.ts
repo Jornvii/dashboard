@@ -63,11 +63,11 @@ import { SideNavComponent } from './side-nav/side-nav.component';
     HttpClientModule,
     MatPaginatorModule,
     MatTableModule, BrowserModule,
-    BrowserAnimationsModule,
     HttpClientModule,
     MatInputModule,
     MatPaginatorModule,
-    MatTableModule, MatPaginatorModule, MatPaginatorModule
+    MatTableModule, MatPaginatorModule, MatPaginatorModule,
+
   ],
   providers: [
     provideClientHydration(),

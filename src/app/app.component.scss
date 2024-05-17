@@ -1,12 +1,15 @@
 .main-container {
-  display: flex;padding-top: 73px;
+  display: flex;
+  padding-top: 73px;
 
-  .side-nav {transition: all 0.5s;
+  .side-nav {
+    transition: all 0.5s;
     border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
     width: 150px;
     min-width: 220px;
     // this is widht of navbar at the left page
-    min-height: calc(100vh - 70px);
+    min-height: calc(100vh - 80px);
     background-color: #106cb7;
     color: #fff;
     box-shadow: 5px 5px 5px #939399;
@@ -16,7 +19,6 @@
       min-width: 60px;
       transition: all 0.5s;
     }
-
   }
 
   .main {
@@ -30,7 +32,6 @@
   z-index: 2;
 }
 
-
 .main-container {
   display: flex;
   position: relative;
@@ -38,8 +39,8 @@
 
 .side-nav {
   width: 150px;
-  min-width: 230px;
-  min-height: calc(100vh - 70px);
+  min-width: 220px;
+  // min-height: calc(100vh - 70px);
   background-color: #106cb7;
   color: #fff;
   box-shadow: 5px 5px 5px #939399;
@@ -56,4 +57,3 @@
   padding: 20px;
   overflow-y: auto;
 }
-

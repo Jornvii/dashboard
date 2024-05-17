@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
-  padding: .5rem;
+  // padding: .5rem;
   width: 100%;
   margin: 0 auto;
 
@@ -30,7 +30,18 @@
         padding: 0;
         display: contents; // Use contents to ensure fieldsets don't interfere with the grid layout
 
-        .two-cols,
+
+
+
+        // .two-cols,
+        //      .part-label {
+        //       margin-top: 0.5rem;
+        //       padding: 0.6rem;
+        //       border: 1px dotted #ff0000;
+        //       border-radius: 5px;
+        //       font-size: 1rem;
+        //     }
+
         label {
           display: flex;
           flex-direction: column;

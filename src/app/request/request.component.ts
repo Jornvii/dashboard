@@ -1,21 +1,33 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { SelectionModel } from '@angular/cdk/collections';
+
 
 export interface RequestElement {
-  id: number;
+  No: number;
   PartNo: string;
-  Rev: string;
-  process: string;
-  Division: string;
-  Fac: string;
-  MCGroup: string;
-  McNo: string;
-  UseFor: string;
-  RequireDate: string;
-  reqby: string;
+  Process: string;
+  McType: string;
+  ItemNo: string;
+  ToolingSpec: string;
+  Usage: string;
+  Qty: number;
+  Result1: string;
+  Result2: string;
+  Result3: string;
+  Result4: string;
+  Result5: string;
+  Result6: string;
 }
+
+const ELEMENT_DATA: RequestElement[] = [
+  { No: 1, PartNo: '1234', Process: 'TURNING', McType: 'Type1', ItemNo: 'Item1', ToolingSpec: 'Spec1', Usage: 'Usage1', Qty: 10, Result1: 'Result1', Result2: 'Result2', Result3: 'Result3', Result4: 'Result4', Result5: 'Result5', Result6: 'Result6' },
+  { No: 2, PartNo: '5678', Process: 'MILLING', McType: 'Type2', ItemNo: 'Item2', ToolingSpec: 'Spec2', Usage: 'Usage2', Qty: 20, Result1: 'Result1', Result2: 'Result2', Result3: 'Result3', Result4: 'Result4', Result5: 'Result5', Result6: 'Result6' },
+  // Add more elements as needed
+];
 
 @Component({
   selector: 'app-request',
@@ -23,8 +35,9 @@ export interface RequestElement {
   styleUrls: ['./request.component.scss'],
 })
 export class RequestComponent implements AfterViewInit {
-  displayedColumns: string[] = ['id', 'PartNo', 'Rev', 'process', 'Division', 'Fac', 'MCGroup', 'McNo', 'UseFor', 'RequireDate', 'reqby', 'setgauge'];
+  displayedColumns: string[] = ['select', 'No', 'PartNo', 'Process', 'McType', 'ItemNo', 'ToolingSpec', 'Usage', 'Qty', 'Result1', 'Result2', 'Result3', 'Result4', 'Result5', 'Result6'];
   dataSource: MatTableDataSource<RequestElement> = new MatTableDataSource<RequestElement>(ELEMENT_DATA);
+  selection = new SelectionModel<RequestElement>(true, []);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -32,42 +45,70 @@ export class RequestComponent implements AfterViewInit {
   selectedDivision: string;
   selectedFac: string;
   selectedProcess: string;
-  selectedUseFor: string;
+  selectedCase: string;
+
+  requestForm: FormGroup;
 
   divisions = [
-    { division: 'div1', viewDivision: 'Division 1' },
-    { division: 'div2', viewDivision: 'Division 2' },
-    { division: 'div3', viewDivision: 'Division 3' },
-    // Add more divisions as needed
+    { division: '---', viewDivision: '---' },
+    { division: 'GM', viewDivision: 'GM' },
+    { division: 'PMA', viewDivision: 'PMA' },
   ];
 
   facs = [
-    { fac: 'fac1', viewValue: 'Facility 1' },
-    { fac: 'fac2', viewValue: 'Facility 2' },
-    { fac: 'fac3', viewValue: 'Facility 3' },
+    { fac: '---', viewValue: '---' },
+    { fac: '1', viewValue: '1' },
+    { fac: '2', viewValue: '2' },
+    { fac: '3', viewValue: '3' },
+    { fac: '4', viewValue: '4' },
+    { fac: '5', viewValue: '5' },
+    { fac: '6', viewValue: '6' },
+    { fac: '7', viewValue: '7' },
+    { fac: '8', viewValue: '8' },
     // Add more facilities as needed
   ];
 
   processes = [
-    { process: 'proc1', viewProcess: 'Process 1' },
-    { process: 'proc2', viewProcess: 'Process 2' },
-    { process: 'proc3', viewProcess: 'Process 3' },
-    // Add more processes as needed
+    { process: '---', viewProcess: '---' },
+    { process: 'TURNING', viewProcess: 'TURNING' },
+    { process: 'F&BORING', viewProcess: 'F&BORING' },
+    { process: 'MILLING', viewProcess: 'MILLING' },
+    { process: 'F&BORING2', viewProcess: 'F&BORING2' },
+    { process: 'F&BORING3', viewProcess: 'F&BORING3' },
   ];
 
-  useFors = [
-    { useFor: 'use1', viewUseFor: 'Use for 1' },
-    { useFor: 'use2', viewUseFor: 'Use for 2' },
-    { useFor: 'use3', viewUseFor: 'Use for 3' },
-    // Add more use-for options as needed
+  Cases = [
+    { Case: '---', viewCase: '---' },
+    { Case: 'BRO', viewCase: 'BRO' },
+    { Case: 'BUR', viewCase: 'BUR' },
+    { Case: 'USA', viewCase: 'USA' },
+    { Case: 'HOL', viewCase: 'HOL' },
+    { Case: 'INV', viewCase: 'INV' },
+    { Case: 'MOD', viewCase: 'MOD' },
+    { Case: 'NON', viewCase: 'NON' },
+    { Case: 'RET', viewCase: 'RET' },
+    { Case: 'SET', viewCase: 'SET' },
+    { Case: 'SPA', viewCase: 'SPA' },
+    { Case: 'STO', viewCase: 'STO' },
+    { Case: 'CHA', viewCase: 'CHA' },
   ];
 
-  constructor() {
+  constructor(private fb: FormBuilder) {
     // Initialize selected values if needed
     this.selectedDivision = this.divisions[0].division;
     this.selectedFac = this.facs[0].fac;
     this.selectedProcess = this.processes[0].process;
-    this.selectedUseFor = this.useFors[0].useFor;
+    this.selectedCase = this.Cases[0].Case;
+
+    this.requestForm = this.fb.group({
+      partNo: [''],
+      revPart: [''],
+      mcType: [''],
+      mcNo: [''],
+      dateOfReq: [''],
+      qty: [0],
+      usage: ['']
+    });
   }
 
   ngAfterViewInit() {
@@ -76,15 +117,45 @@ export class RequestComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  onDelete(element: RequestElement): void {
-    // Handle delete action here
-    console.log('Delete request:', element);
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
   }
-}
 
-const ELEMENT_DATA: RequestElement[] = [
-  { id: 1, PartNo: 'PN001', Rev: 'A', process: 'Welding', Division: 'Division 1', Fac: 'Facility A', MCGroup: 'Group 1', McNo: 'MC001', UseFor: 'Production', RequireDate: '2023-05-01', reqby: 'John Doe' },
-  { id: 2, PartNo: 'PN002', Rev: 'B', process: 'Assembly', Division: 'Division 2', Fac: 'Facility B', MCGroup: 'Group 2', McNo: 'MC002', UseFor: 'Quality Check', RequireDate: '2023-05-02', reqby: 'Jane Smith' },
-  { id: 3, PartNo: 'PN003', Rev: 'C', process: 'Inspection', Division: 'Division 3', Fac: 'Facility C', MCGroup: 'Group 3', McNo: 'MC003', UseFor: 'Testing', RequireDate: '2023-05-03', reqby: 'Mike Johnson' },
-  // Add more data as needed
-];
+  masterToggle() {
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  checkboxLabel(row?: RequestElement): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.No + 1}`;
+  }
+
+
+  // onFormSubmit() {
+  //   const formValue = this.requestForm.value;
+  //   const newRequest: RequestElement = {
+  //     No: this.dataSource.data.length + 1,
+  //     PartNo: formValue.partNo,
+  //     Process: this.selectedProcess,
+  //     McType: formValue.mcType,
+  //     ItemNo: 'Item Number', // Replace with actual item number if available
+  //     ToolingSpec: 'Tooling Spec', // Replace with actual tooling spec if available
+  //     Usage: formValue.usage,
+  //     Qty: formValue.qty,
+  //     Result1: 'Result1', // Replace with actual result if available
+  //     Result2: 'Result2', // Replace with actual result if available
+  //     Result3: 'Result3', // Replace with actual result if available
+  //     Result4: 'Result4', // Replace with actual result if available
+  //     Result5: 'Result5', // Replace with actual result if available
+  //     Result6: 'Result6' // Replace with actual result if available
+  //   };
+  //   this.addData(newRequest);
+  //   this.requestForm.reset(); // Reset form after submission
+  // }
+}

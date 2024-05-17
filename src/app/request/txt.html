@@ -1,0 +1,109 @@
+<div class="table-container">
+  <h3 style="text-align: center; font-weight: 900; font-size: 18px">
+    Your Request
+  </h3>
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()" aria-label="Select all rows"></mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)" aria-label="Select row {{ row.id }}"></mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- No. Column -->
+      <ng-container matColumnDef="No">
+        <th mat-header-cell *matHeaderCellDef>No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.No }}</td>
+      </ng-container>
+
+      <!-- Part No Column -->
+      <ng-container matColumnDef="PartNo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Part No</th>
+        <td mat-cell *matCellDef="let element">{{ element.PartNo }}</td>
+      </ng-container>
+
+      <!-- Process Column -->
+      <ng-container matColumnDef="Process">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Process</th>
+        <td mat-cell *matCellDef="let element">{{ element.Process }}</td>
+      </ng-container>
+
+      <!-- McType Column -->
+      <ng-container matColumnDef="McType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>McType</th>
+        <td mat-cell *matCellDef="let element">{{ element.McType}}</td>
+      </ng-container>
+
+      <!-- ItemNo Column -->
+      <ng-container matColumnDef="ItemNo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Item No</th>
+        <td mat-cell *matCellDef="let element">{{ element.ItemNo }}</td>
+      </ng-container>
+
+      <!-- ToolingSpec Column -->
+      <ng-container matColumnDef="ToolingSpec">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ToolingSpec</th>
+        <td mat-cell *matCellDef="let element">{{ element.ToolingSpec }}</td>
+      </ng-container>
+      <!--Qty Column -->
+      <ng-container matColumnDef="Qty">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Qty</th>
+        <td mat-cell *matCellDef="let element">{{ element.Qty }}</td>
+      </ng-container>
+      <!--Usage Column -->
+      <ng-container matColumnDef="Usage">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Usage</th>
+        <td mat-cell *matCellDef="let element">{{ element.Usage }}</td>
+      </ng-container>
+      <!--Result1 Column -->
+      <ng-container matColumnDef="Result1">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Result1</th>
+        <td mat-cell *matCellDef="let element">{{ element.Result1 }}</td>
+      </ng-container>
+
+      <!--Result2 Column -->
+      <ng-container matColumnDef="Result2">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Result2</th>
+        <td mat-cell *matCellDef="let element">{{ element.Result2 }}</td>
+      </ng-container>
+
+      <!--Result3 Column -->
+      <ng-container matColumnDef="Result3">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Result3</th>
+        <td mat-cell *matCellDef="let element">{{ element.Result3 }}</td>
+      </ng-container>
+
+      <!--Result4 Column -->
+      <ng-container matColumnDef="Result4">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Result4</th>
+        <td mat-cell *matCellDef="let element">{{ element.Result4 }}</td>
+      </ng-container>
+
+      <!--Result5 Column -->
+      <ng-container matColumnDef="Result5">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Result5</th>
+        <td mat-cell *matCellDef="let element">{{ element.Result5 }}</td>
+      </ng-container>
+
+      <!--Result6 Column -->
+      <ng-container matColumnDef="Result6">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Result6</th>
+        <td mat-cell *matCellDef="let element">{{ element.Result6 }}</td>
+      </ng-container>
+
+      <!-- Table rows -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>
+<div class="btns">
+  <button type="submit" class="sub-button">Submit ➤</button>
+</div>
+</div>

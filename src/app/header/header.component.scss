@@ -1,5 +1,5 @@
-
-.header {  position: fixed;
+.header {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -14,7 +14,7 @@
   @media only screen and (max-width: 770px) {
     width: 100% !important;
   }
-  img{
+  img {
     width: 30px;
     height: 30px;
     margin-right: 10px;
@@ -28,13 +28,14 @@
     }
   }
   .s-logo {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 500;
   }
 
   //drop down menu items styles
 
   .dropdown-btn {
+    // width: 60px;
     padding: 16px;
     font-size: 16px;
     border: none;
@@ -46,7 +47,8 @@
     display: inline-block;
   }
 
-  .dropdown-content {border-radius: 5px;
+  .dropdown-content {
+    border-radius: 5px;
     display: none;
     position: absolute;
     background-color: #f9f9f9;
