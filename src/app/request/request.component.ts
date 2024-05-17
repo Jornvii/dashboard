@@ -14,19 +14,25 @@ export interface RequestElement {
   ItemNo: string;
   ToolingSpec: string;
   Usage: string;
+  Case:string;
   Qty: number;
   Result1: string;
   Result2: string;
-  Result3: string;
+  Result3: string
   Result4: string;
   Result5: string;
   Result6: string;
 }
 
+// const ELEMENT_DATA: RequestElement[] = [
+//   { No: 1, PartNo: '1234', Process: 'TURNING', McType: 'Type1', ItemNo: 'Item1', ToolingSpec: 'Spec1', },
+//   { No: 2, PartNo: '5678', Process: 'MILLING', McType: 'Type2', ItemNo: 'Item2', ToolingSpec: 'Spec2',},
+
+// ];
 const ELEMENT_DATA: RequestElement[] = [
-  { No: 1, PartNo: '1234', Process: 'TURNING', McType: 'Type1', ItemNo: 'Item1', ToolingSpec: 'Spec1', Usage: 'Usage1', Qty: 10, Result1: 'Result1', Result2: 'Result2', Result3: 'Result3', Result4: 'Result4', Result5: 'Result5', Result6: 'Result6' },
-  { No: 2, PartNo: '5678', Process: 'MILLING', McType: 'Type2', ItemNo: 'Item2', ToolingSpec: 'Spec2', Usage: 'Usage2', Qty: 20, Result1: 'Result1', Result2: 'Result2', Result3: 'Result3', Result4: 'Result4', Result5: 'Result5', Result6: 'Result6' },
-  // Add more elements as needed
+  { No: 1, PartNo: '1234', Process: 'TURNING', McType: 'Type1', ItemNo: 'Item1', ToolingSpec: 'Spec1', Usage: 'Usage1',Case:'USA', Qty: 10, Result1: 'Result1', Result2: 'Result2', Result3: 'Result3', Result4: 'Result4', Result5: 'Result5', Result6: 'Result6' },
+  { No: 2, PartNo: '5678', Process: 'MILLING', McType: 'Type2', ItemNo: 'Item2', ToolingSpec: 'Spec2', Usage: 'Usage2',Case:'USA', Qty: 20, Result1: 'Result1', Result2: 'Result2', Result3: 'Result3', Result4: 'Result4', Result5: 'Result5', Result6: 'Result6' },
+
 ];
 
 @Component({
@@ -35,7 +41,7 @@ const ELEMENT_DATA: RequestElement[] = [
   styleUrls: ['./request.component.scss'],
 })
 export class RequestComponent implements AfterViewInit {
-  displayedColumns: string[] = ['select', 'No', 'PartNo', 'Process', 'McType', 'ItemNo', 'ToolingSpec', 'Usage', 'Qty', 'Result1', 'Result2', 'Result3', 'Result4', 'Result5', 'Result6'];
+  displayedColumns: string[] = ['select', 'No', 'PartNo', 'Process', 'McType', 'ItemNo', 'ToolingSpec', 'Usage','Case', 'Qty', 'Result1', 'Result2', 'Result3', 'Result4', 'Result5', 'Result6'];
   dataSource: MatTableDataSource<RequestElement> = new MatTableDataSource<RequestElement>(ELEMENT_DATA);
   selection = new SelectionModel<RequestElement>(true, []);
 
@@ -111,6 +117,10 @@ export class RequestComponent implements AfterViewInit {
     });
   }
 
+
+
+
+
   ngAfterViewInit() {
     // Assign paginator and sort to the data source
     this.dataSource.paginator = this.paginator;
@@ -137,6 +147,38 @@ export class RequestComponent implements AfterViewInit {
   }
 
 
+
+
+  onFormSubmit() {
+    const formValue = this.requestForm.value;
+    const newRequest: RequestElement = {
+      No: this.dataSource.data.length + 1,
+      PartNo: formValue.partNo,
+      Process: formValue.process,
+      McType: formValue.mcType,
+      ItemNo: 'Item Number',
+      ToolingSpec: 'Tooling Spec',
+      Usage: formValue.usage,
+      Qty: formValue.qty,
+      Result1: 'Result1',
+      Result2: 'Result2',
+      Result3: 'Result3',
+      Result4: 'Result4',
+      Result5: 'Result5',
+      Result6: 'Result6',
+      Case: ''
+    };
+    this.addData(newRequest);
+    this.requestForm.reset(); // Reset form after submission
+  }
+
+  addData(newRequest: RequestElement) {
+    // Add new data to the data source
+    const data = this.dataSource.data;
+    data.push(newRequest);
+    this.dataSource.data = data;
+  }
+
   // onFormSubmit() {
   //   const formValue = this.requestForm.value;
   //   const newRequest: RequestElement = {
@@ -148,12 +190,12 @@ export class RequestComponent implements AfterViewInit {
   //     ToolingSpec: 'Tooling Spec', // Replace with actual tooling spec if available
   //     Usage: formValue.usage,
   //     Qty: formValue.qty,
-  //     Result1: 'Result1', // Replace with actual result if available
-  //     Result2: 'Result2', // Replace with actual result if available
-  //     Result3: 'Result3', // Replace with actual result if available
-  //     Result4: 'Result4', // Replace with actual result if available
-  //     Result5: 'Result5', // Replace with actual result if available
-  //     Result6: 'Result6' // Replace with actual result if available
+  //     Result1: 'Result1',
+  //     Result2: 'Result2',
+  //     Result3: 'Result3',
+  //     Result4: 'Result4',
+  //     Result5: 'Result5',
+  //     Result6: 'Result6'
   //   };
   //   this.addData(newRequest);
   //   this.requestForm.reset(); // Reset form after submission

@@ -132,9 +132,9 @@
     width: 100%;
   }
 }
-.partNO{
+.partNO {
   input {
-    background-color: #c4e1ff;
+    background-color: #b9cce968;
     margin-top: 0.5rem;
     padding: 0.6rem;
     border: 1px solid #323131;
@@ -227,13 +227,25 @@
       background-color: #f5f5f5;
     }
 
+    .input-cell {
+      padding: 0 !important;
+    }
+
+    .input-field {
+      width: 100px;
+    }
+
+    .input-element {
+      width: 100%;
+    }
+
     .mat-icon-button {
       background: none;
       border: none;
       cursor: pointer;
       font-size: 18px;
 
-      // Add the color to the icon
+
       .delete-icon {
         color: red !important;
       }

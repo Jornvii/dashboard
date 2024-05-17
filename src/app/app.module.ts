@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
@@ -27,6 +27,9 @@ import { MaterialModule } from './material.module';
 import { RegisterComponent } from './register/register.component';
 import { RequestComponent } from './request/request.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSortModule } from '@angular/material/sort';
 
 
 
@@ -52,21 +55,25 @@ import { SideNavComponent } from './side-nav/side-nav.component';
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
-    BrowserModule,
     AppRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-    BrowserModule,
     BrowserAnimationsModule,
-    HttpClientModule,
     MatPaginatorModule,
-    MatTableModule, BrowserModule,
+    MatTableModule,
     HttpClientModule,
     MatInputModule,
     MatPaginatorModule,
     MatTableModule, MatPaginatorModule, MatPaginatorModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    FormsModule
 
   ],
   providers: [
