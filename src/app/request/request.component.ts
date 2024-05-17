@@ -156,7 +156,7 @@ export class RequestComponent implements AfterViewInit {
       PartNo: formValue.partNo,
       Process: formValue.process,
       McType: formValue.mcType,
-      ItemNo: 'Item Number',
+      ItemNo: 'ItemNumber',
       ToolingSpec: 'Tooling Spec',
       Usage: formValue.usage,
       Qty: formValue.qty,
