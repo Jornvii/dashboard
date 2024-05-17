@@ -9,7 +9,7 @@
   .container {
     grid-column: span 3;
     background: #f7f7f7;
-    padding: .5rem;
+    padding: 0.5rem;
     width: 100%;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -21,6 +21,9 @@
     }
 
     form {
+      border: 2px dotted #bdb7b7;
+      padding: 1em;
+      border-radius: 10px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1rem;
@@ -29,18 +32,6 @@
         border: none;
         padding: 0;
         display: contents; // Use contents to ensure fieldsets don't interfere with the grid layout
-
-
-
-
-        // .two-cols,
-        //      .part-label {
-        //       margin-top: 0.5rem;
-        //       padding: 0.6rem;
-        //       border: 1px dotted #ff0000;
-        //       border-radius: 5px;
-        //       font-size: 1rem;
-        //     }
 
         label {
           display: flex;
@@ -75,7 +66,6 @@
         grid-column: span 3;
         // display: flex;
         // justify-content: space-between;
-
 
         .sub-button {
           width: 160px;
@@ -130,21 +120,27 @@
         }
       }
     }
-
   }
-
 
   // /table style for table
   .table-container {
     overflow-x: auto;
     max-width: 100%;
-
   }
 
   table {
     width: 100%;
   }
-
+}
+.partNO{
+  input {
+    background-color: #c4e1ff;
+    margin-top: 0.5rem;
+    padding: 0.6rem;
+    border: 1px solid #323131;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
 }
 .sub-button {
   width: 160px;
@@ -177,8 +173,6 @@
     grid-template-columns: 1fr;
     padding: 1rem;
 
-
-
     form {
       grid-template-columns: 1fr;
 
@@ -205,7 +199,8 @@
     width: 100%;
     border-collapse: collapse;
 
-    th, td {
+    th,
+    td {
       // padding: 12px 20px;
       text-align: left;
       border-bottom: 1px solid #a2a2a2;
@@ -255,10 +250,6 @@
     }
   }
 }
-
-
-
-
 
 // Responsive adjustments
 // Responsive adjustments for tablets and below
@@ -316,16 +307,20 @@
     form {
       gap: 0.5rem;
 
-      fieldset .two-cols, label {
+      fieldset .two-cols,
+      label {
         gap: 0.25rem;
 
-        textarea, mat-select, input {
+        textarea,
+        mat-select,
+        input {
           font-size: 0.875rem;
         }
       }
 
       .btns {
-        .sub-button, .btns-clear {
+        .sub-button,
+        .btns-clear {
           padding: 0.5rem 1rem;
           font-size: 0.875rem;
         }
@@ -333,6 +328,3 @@
     }
   }
 }
-
-
-
