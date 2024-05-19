@@ -1,9 +1,9 @@
-import { Component, AfterViewInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { SelectionModel } from '@angular/cdk/collections';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { SelectionModel } from '@angular/cdk/collections';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 export interface RequestElement {
@@ -118,14 +118,13 @@ export class RequestComponent implements AfterViewInit {
   }
 
 
-
-
-
   ngAfterViewInit() {
     // Assign paginator and sort to the data source
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+
+
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -134,9 +133,7 @@ export class RequestComponent implements AfterViewInit {
   }
 
   masterToggle() {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach(row => this.selection.select(row));
+    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
   checkboxLabel(row?: RequestElement): string {

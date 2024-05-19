@@ -1,13 +1,17 @@
 
+// .invoice-form {
+//   border: 1px solid #ccc;
+//   font-family: Arial, sans-serif;
+//   width: 21cm; /* A4 width */
+//   height: 29.7cm; /* A4 height */
+//   // height: max-content;
+//   margin: 0 auto;
+//   padding: 2cm; /* Margins */
 .invoice-form {
-  border: 1px solid #ccc;
-  font-family: Arial, sans-serif;
-  width: 21cm; /* A4 width */
-  height: 29.7cm; /* A4 height */
-  // height: max-content;
+  width: 210mm;
+  padding: 20mm;
   margin: 0 auto;
-  padding: 2cm; /* Margins */
-
+  border: 1px solid #ddd;
 
   .header-form {
     display: flex;

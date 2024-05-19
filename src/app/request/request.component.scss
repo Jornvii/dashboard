@@ -127,11 +127,17 @@
     overflow-x: auto;
     max-width: 100%;
   }
+  /* your-component.component.css */
+.selected {
+  background-color: #b1cfff !important; /* Adjust the color as needed */
+}
+
 
   table {
     width: 100%;
   }
 }
+
 .partNO {
   input {
     background-color: #b9cce968;
@@ -142,6 +148,7 @@
     font-size: 1rem;
   }
 }
+
 .sub-button {
   width: 160px;
   margin: 15px;
@@ -167,6 +174,7 @@
     box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
   }
 }
+
 // Responsive adjustments
 @media (max-width: 768px) {
   .wrapper {
@@ -331,6 +339,7 @@
       }
 
       .btns {
+
         .sub-button,
         .btns-clear {
           padding: 0.5rem 1rem;
