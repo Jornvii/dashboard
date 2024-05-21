@@ -1,36 +1,24 @@
 <div class="container">
   <div class="header">
-    <!-- <img
-      src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Minebea_Logo.svg/2560px-Minebea_Logo.svg.png"
-      alt="mnb logo"
-    /> -->
-    <h1>Log in</h1>
+    <h1>Login</h1>
   </div>
-
 
   <mat-card>
     <mat-card-content>
-      <form
-        class="example-form"
-        [formGroup]="loginform"
-        (ngSubmit)="proceedlogin()"
-      >
+      <form class="example-form" [formGroup]="loginForm" (ngSubmit)="proceedLogin()">
         <mat-form-field class="example-full-width">
-          <mat-label>Emp.ID</mat-label>
-          <input matInput formControlName="id" />
+          <mat-label>Emp.Code</mat-label>
+          <input matInput formControlName="Emp_Code" />
         </mat-form-field>
 
-
-        <mat-form-field class="example-full-width">
-          <mat-label>Password</mat-label>
-          <input type="password" matInput formControlName="password" />
-        </mat-form-field>
         <div class="btn-log">
-          <a routerLink="homepage"><button mat-raised-button color="primary" style="margin: 10px">
+          <button mat-raised-button color="primary" style="margin: 10px" type="submit">
             Login
-          </button></a>
-          <p>Don't have an account yet? <a routerLink="/register">Register here</a></p>
-
+          </button>
+          <p>
+            Don't have an account yet?
+            <a routerLink="/register">Register here</a>
+          </p>
         </div>
       </form>
     </mat-card-content>

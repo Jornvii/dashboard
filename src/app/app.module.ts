@@ -1,8 +1,11 @@
 // import { IssueComponent } from './issue/issue.component';
 import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  provideClientHydration,
+} from '@angular/platform-browser';
 
-import { HttpClientModule } from '@angular/common/http';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -30,8 +33,12 @@ import { SideNavComponent } from './side-nav/side-nav.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSortModule } from '@angular/material/sort';
-
-
+import {
+  HttpClientModule,
+  provideHttpClient,
+  withFetch,
+} from '@angular/common/http';
+import { AuthService } from './service/auth.service';
 
 @NgModule({
   declarations: [
@@ -49,37 +56,30 @@ import { MatSortModule } from '@angular/material/sort';
     HomepageComponent,
     LoginComponent,
     RegisterComponent,
-
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
-    AppRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
     HttpClientModule,
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
-    MatPaginatorModule,
-    MatTableModule,
-    HttpClientModule,
     MatInputModule,
     MatPaginatorModule,
-    MatTableModule, MatPaginatorModule, MatPaginatorModule,
-    BrowserAnimationsModule,
     MatTableModule,
-    MatPaginatorModule,
     MatSortModule,
     MatCheckboxModule,
     MatFormFieldModule,
-    FormsModule
-
+    FormsModule,
   ],
   providers: [
     provideClientHydration(),
     provideAnimationsAsync(),
+    provideHttpClient(withFetch()),
+    AuthService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

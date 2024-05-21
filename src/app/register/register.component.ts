@@ -1,59 +1,51 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router'; // Correct import
-import { ToastrService } from 'ngx-toastr';
-import { AuthService } from '../service/auth.service';
 
+import { ToastrService } from 'ngx-toastr';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss',
+  styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
+  registerForm: FormGroup;
+
   constructor(
-    private builder: FormBuilder,
-    private toastr: ToastrService,
-    private service: AuthService,
-    private router: Router,
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.registerForm = this.fb.group({
+      Emp_Code: ['', Validators.required],
+      Emp_Name: ['', Validators.required],
+      Emp_Surname: ['', Validators.required],
+      Emp_Position: ['', Validators.required]
+    });
+  }
 
+  ngOnInit(): void {}
 
-  ) { }
-
-
-  registerform = this.builder.group({
-    id: this.builder.control(
-      '',
-      Validators.compose([Validators.required, Validators.minLength(5)])
-    ),
-    name: this.builder.control('', Validators.required),
-    password: this.builder.control(
-      '',
-      Validators.compose([
-        Validators.required,
-        Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$'),
-      ])
-    ),
-    email: this.builder.control(
-      '',
-      Validators.compose([Validators.required, Validators.email])
-    ),
-    gender: this.builder.control('male'),
-    role: this.builder.control(''),
-    isactive: this.builder.control(false),
-  });
-  //event for registration
-  proceedregistration() {
-    if (this.registerform.valid) {
-      this.service.Proceedregister(this.registerform.value).subscribe(res => {
-        this.toastr.success(
-          'Please Contact Admin to approve you to access the system',
-          'Registered successfully'
-        );
-        this.router.navigate(['/login']);
-      });
-    } else {
-      this.toastr.warning('please enter a valid registration');
+  onSubmit(): void {
+    if (this.registerForm.valid) {
+      this.authService.register(this.registerForm.value).subscribe(
+        response => {
+          if (response.success) {
+            alert('Register successful');
+            this.router.navigate(['/login']);
+          } else {
+            alert(response.message);
+          }
+        },
+        // error => {
+        //   alert('An error occurred');
+        // }
+      );
+    }
+    else {
+      alert('Please fill out all fields');
     }
   }
 }

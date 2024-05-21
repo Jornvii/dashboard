@@ -1,29 +1,42 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  private apiUrl = 'http://localhost:3000/api';
+  private empCode: string = ''
+  constructor(private http: HttpClient) { }
 
 
-  constructor( private http:HttpClient) { }
-  apiurl='http://localhost:3000/user';
-
-
-  GetAll(){
-    return this.http.get(this.apiurl);
+  //loginnnnnnnnnnnnnnnnnnnnnnnnn
+  authStatus: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  login(empCode: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/login`, { Emp_Code: empCode });
   }
-  Getbycode(code:any){
-    return this.http.get(this.apiurl+'/'+code);
+  setEmpCode(empCode: string): void {
+    this.empCode = empCode;
   }
 
-
-  Proceedregister(inputdata:any){
-    return this.http.post(this.apiurl,inputdata);
+  getEmpCode(): Observable<string> {
+    return this.http.get<string>('api/empCode');
   }
- Updateuser(code:any,inputdata:any){
-    return this.http.put(this.apiurl+'/'+code,inputdata);
+  // isLoggedIn(): boolean {
+  //   return !!localStorage.getItem('token');
+  // }
+
+  isLoggedIn(): boolean {
+    if (typeof localStorage !== 'undefined') {
+      return !!localStorage.getItem('token');
+    }
+    return false;
+  }
+  //loginnnnnnnnnnnnnnnnnnnnnnnnn
+
+
+  register(employee: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/register`, employee);
   }
 }
