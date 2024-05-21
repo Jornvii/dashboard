@@ -23,9 +23,6 @@ export class AuthService {
   getEmpCode(): Observable<string> {
     return this.http.get<string>('api/empCode');
   }
-  // isLoggedIn(): boolean {
-  //   return !!localStorage.getItem('token');
-  // }
 
   isLoggedIn(): boolean {
     if (typeof localStorage !== 'undefined') {
@@ -35,8 +32,12 @@ export class AuthService {
   }
   //loginnnnnnnnnnnnnnnnnnnnnnnnn
 
-
   register(employee: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/register`, employee);
+  }
+
+
+  createMasterRequest(requestData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/createMasterRequest`, requestData);
   }
 }

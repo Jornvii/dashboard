@@ -24,11 +24,7 @@ export interface RequestElement {
   Result6: string;
 }
 
-// const ELEMENT_DATA: RequestElement[] = [
-//   { No: 1, PartNo: '1234', Process: 'TURNING', McType: 'Type1', ItemNo: 'Item1', ToolingSpec: 'Spec1', },
-//   { No: 2, PartNo: '5678', Process: 'MILLING', McType: 'Type2', ItemNo: 'Item2', ToolingSpec: 'Spec2',},
 
-// ];
 const ELEMENT_DATA: RequestElement[] = [
   { No: 1, PartNo: '1234', Process: 'TURNING', McType: 'Type1', ItemNo: 'Item1', ToolingSpec: 'Spec1', Usage: 'Usage1',Case:'USA', Qty: 10, Result1: 'Result1', Result2: 'Result2', Result3: 'Result3', Result4: 'Result4', Result5: 'Result5', Result6: 'Result6' },
   { No: 2, PartNo: '5678', Process: 'MILLING', McType: 'Type2', ItemNo: 'Item2', ToolingSpec: 'Spec2', Usage: 'Usage2',Case:'USA', Qty: 20, Result1: 'Result1', Result2: 'Result2', Result3: 'Result3', Result4: 'Result4', Result5: 'Result5', Result6: 'Result6' },
@@ -41,6 +37,7 @@ const ELEMENT_DATA: RequestElement[] = [
   styleUrls: ['./request.component.scss'],
 })
 export class RequestComponent implements AfterViewInit {
+  requestForm: FormGroup;
   displayedColumns: string[] = ['select', 'No', 'PartNo', 'Process', 'McType', 'ItemNo', 'ToolingSpec', 'Usage','Case', 'Qty', 'Result1', 'Result2', 'Result3', 'Result4', 'Result5', 'Result6'];
   dataSource: MatTableDataSource<RequestElement> = new MatTableDataSource<RequestElement>(ELEMENT_DATA);
   selection = new SelectionModel<RequestElement>(true, []);
@@ -53,7 +50,7 @@ export class RequestComponent implements AfterViewInit {
   selectedProcess: string;
   selectedCase: string;
 
-  requestForm: FormGroup;
+
 
   divisions = [
     { division: '---', viewDivision: '---' },
@@ -142,49 +139,38 @@ export class RequestComponent implements AfterViewInit {
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.No + 1}`;
   }
+  ngOnInit(): void {}
 
-
-
-
-  onFormSubmit() {
-    const formValue = this.requestForm.value;
-    const newRequest: RequestElement = {
-      No: this.dataSource.data.length + 1,
-      PartNo: formValue.partNo,
-      Process: formValue.process,
-      McType: formValue.mcType,
-      ItemNo: 'ItemNumber',
-      ToolingSpec: 'Tooling Spec',
-      Usage: formValue.usage,
-      Qty: formValue.qty,
-      Result1: 'Result1',
-      Result2: 'Result2',
-      Result3: 'Result3',
-      Result4: 'Result4',
-      Result5: 'Result5',
-      Result6: 'Result6',
-      Case: ''
-    };
-    this.addData(newRequest);
-    this.requestForm.reset(); // Reset form after submission
+  onSubmit(): void {
+    if (this.requestForm.valid) {
+      this.requestService.createMasterRequest(this.requestForm.value).subscribe(
+        response => {
+          console.log('Form submitted successfully', response);
+          // Redirect or show success message
+        },
+        error => {
+          console.error('Error submitting form', error);
+          // Handle error
+        }
+      );
+    }
   }
 
-  addData(newRequest: RequestElement) {
-    // Add new data to the data source
-    const data = this.dataSource.data;
-    data.push(newRequest);
-    this.dataSource.data = data;
-  }
+
+
+
+
+
 
   // onFormSubmit() {
   //   const formValue = this.requestForm.value;
   //   const newRequest: RequestElement = {
   //     No: this.dataSource.data.length + 1,
   //     PartNo: formValue.partNo,
-  //     Process: this.selectedProcess,
+  //     Process: formValue.process,
   //     McType: formValue.mcType,
-  //     ItemNo: 'Item Number', // Replace with actual item number if available
-  //     ToolingSpec: 'Tooling Spec', // Replace with actual tooling spec if available
+  //     ItemNo: 'ItemNumber',
+  //     ToolingSpec: 'Tooling Spec',
   //     Usage: formValue.usage,
   //     Qty: formValue.qty,
   //     Result1: 'Result1',
@@ -192,9 +178,19 @@ export class RequestComponent implements AfterViewInit {
   //     Result3: 'Result3',
   //     Result4: 'Result4',
   //     Result5: 'Result5',
-  //     Result6: 'Result6'
+  //     Result6: 'Result6',
+  //     Case: ''
   //   };
   //   this.addData(newRequest);
   //   this.requestForm.reset(); // Reset form after submission
   // }
+
+  // addData(newRequest: RequestElement) {
+  //   // Add new data to the data source
+  //   const data = this.dataSource.data;
+  //   data.push(newRequest);
+  //   this.dataSource.data = data;
+  // }
+
+
 }
