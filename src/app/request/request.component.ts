@@ -1,196 +1,68 @@
-import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-
-
-export interface RequestElement {
-  No: number;
-  PartNo: string;
-  Process: string;
-  McType: string;
-  ItemNo: string;
-  ToolingSpec: string;
-  Usage: string;
-  Case:string;
-  Qty: number;
-  Result1: string;
-  Result2: string;
-  Result3: string
-  Result4: string;
-  Result5: string;
-  Result6: string;
-}
-
-
-const ELEMENT_DATA: RequestElement[] = [
-  { No: 1, PartNo: '1234', Process: 'TURNING', McType: 'Type1', ItemNo: 'Item1', ToolingSpec: 'Spec1', Usage: 'Usage1',Case:'USA', Qty: 10, Result1: 'Result1', Result2: 'Result2', Result3: 'Result3', Result4: 'Result4', Result5: 'Result5', Result6: 'Result6' },
-  { No: 2, PartNo: '5678', Process: 'MILLING', McType: 'Type2', ItemNo: 'Item2', ToolingSpec: 'Spec2', Usage: 'Usage2',Case:'USA', Qty: 20, Result1: 'Result1', Result2: 'Result2', Result3: 'Result3', Result4: 'Result4', Result5: 'Result5', Result6: 'Result6' },
-
-];
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-request',
   templateUrl: './request.component.html',
   styleUrls: ['./request.component.scss'],
 })
-export class RequestComponent implements AfterViewInit {
-  requestForm: FormGroup;
-  displayedColumns: string[] = ['select', 'No', 'PartNo', 'Process', 'McType', 'ItemNo', 'ToolingSpec', 'Usage','Case', 'Qty', 'Result1', 'Result2', 'Result3', 'Result4', 'Result5', 'Result6'];
-  dataSource: MatTableDataSource<RequestElement> = new MatTableDataSource<RequestElement>(ELEMENT_DATA);
-  selection = new SelectionModel<RequestElement>(true, []);
+export class RequestComponent implements OnInit {
+  requestForm!: FormGroup;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
-  selectedDivision: string;
-  selectedFac: string;
-  selectedProcess: string;
-  selectedCase: string;
-
-
-
-  divisions = [
-    { division: '---', viewDivision: '---' },
-    { division: 'GM', viewDivision: 'GM' },
-    { division: 'PMA', viewDivision: 'PMA' },
-  ];
-
-  facs = [
-    { fac: '---', viewValue: '---' },
-    { fac: '1', viewValue: '1' },
-    { fac: '2', viewValue: '2' },
-    { fac: '3', viewValue: '3' },
-    { fac: '4', viewValue: '4' },
-    { fac: '5', viewValue: '5' },
-    { fac: '6', viewValue: '6' },
-    { fac: '7', viewValue: '7' },
-    { fac: '8', viewValue: '8' },
-    // Add more facilities as needed
-  ];
-
-  processes = [
-    { process: '---', viewProcess: '---' },
-    { process: 'TURNING', viewProcess: 'TURNING' },
-    { process: 'F&BORING', viewProcess: 'F&BORING' },
-    { process: 'MILLING', viewProcess: 'MILLING' },
-    { process: 'F&BORING2', viewProcess: 'F&BORING2' },
-    { process: 'F&BORING3', viewProcess: 'F&BORING3' },
-  ];
-
-  Cases = [
-    { Case: '---', viewCase: '---' },
-    { Case: 'BRO', viewCase: 'BRO' },
-    { Case: 'BUR', viewCase: 'BUR' },
-    { Case: 'USA', viewCase: 'USA' },
-    { Case: 'HOL', viewCase: 'HOL' },
-    { Case: 'INV', viewCase: 'INV' },
-    { Case: 'MOD', viewCase: 'MOD' },
-    { Case: 'NON', viewCase: 'NON' },
-    { Case: 'RET', viewCase: 'RET' },
-    { Case: 'SET', viewCase: 'SET' },
-    { Case: 'SPA', viewCase: 'SPA' },
-    { Case: 'STO', viewCase: 'STO' },
-    { Case: 'CHA', viewCase: 'CHA' },
-  ];
-
-  constructor(private fb: FormBuilder) {
-    // Initialize selected values if needed
+  partNoSuggestions: string[] = [];
+  processOptions: string[] = [];
+  machineOptions: string[] = [];
+ selectedDivision: string;
+ divisions = [
+  { division: '---', viewDivision: '---' },
+  { division: 'GM', viewDivision: 'GM' },
+  { division: 'PMA', viewDivision: 'PMA' },
+];
+  constructor(private formBuilder: FormBuilder, private authService: AuthService) {
     this.selectedDivision = this.divisions[0].division;
-    this.selectedFac = this.facs[0].fac;
-    this.selectedProcess = this.processes[0].process;
-    this.selectedCase = this.Cases[0].Case;
+   }
 
-    this.requestForm = this.fb.group({
-      partNo: [''],
-      revPart: [''],
-      mcType: [''],
-      mcNo: [''],
-      dateOfReq: [''],
-      qty: [0],
-      usage: ['']
+  ngOnInit(): void {
+    this.requestForm = this.formBuilder.group({
+      PartNo: [''],
+      Process: [''],
+      MC: ['']
     });
   }
 
-
-  ngAfterViewInit() {
-    // Assign paginator and sort to the data source
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  fetchPartNoSuggestions(): void {
+    const partNo = this.requestForm.get('PartNo')?.value;
+    this.authService.get_onlyPartNo({ PartNo: partNo }).subscribe(data => {
+      this.partNoSuggestions = data.suggestions;
+    });
   }
 
-
-
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
+  fetchProcessOptions(): void {
+    const partNo = this.requestForm.get('PartNo')?.value;
+    this.authService.getProcesses({ PartNo: partNo }).subscribe(data => {
+      this.processOptions = data.processes;
+    });
   }
 
-  masterToggle() {
-    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(row => this.selection.select(row));
+  fetchMachineOptions(): void {
+    const partNo = this.requestForm.get('PartNo')?.value;
+    const process = this.requestForm.get('Process')?.value;
+    this.authService.getMachines({ PartNo: partNo, Process: process }).subscribe(data => {
+      this.machineOptions = data.machines;
+    });
   }
 
-  checkboxLabel(row?: RequestElement): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.No + 1}`;
+  onPartNoSelected(partNo: string): void {
+    console.log('Selected Part No:', partNo);
+    this.requestForm.patchValue({ PartNo: partNo });
+    this.fetchProcessOptions();
   }
-  ngOnInit(): void {}
 
   onSubmit(): void {
-    if (this.requestForm.valid) {
-      this.requestService.createMasterRequest(this.requestForm.value).subscribe(
-        response => {
-          console.log('Form submitted successfully', response);
-          // Redirect or show success message
-        },
-        error => {
-          console.error('Error submitting form', error);
-          // Handle error
-        }
-      );
-    }
+    // Submit form data to backend
+    const formData = this.requestForm.value;
+    console.log(formData);
+    // You can also call any additional service method here to submit the form data
   }
-
-
-
-
-
-
-
-  // onFormSubmit() {
-  //   const formValue = this.requestForm.value;
-  //   const newRequest: RequestElement = {
-  //     No: this.dataSource.data.length + 1,
-  //     PartNo: formValue.partNo,
-  //     Process: formValue.process,
-  //     McType: formValue.mcType,
-  //     ItemNo: 'ItemNumber',
-  //     ToolingSpec: 'Tooling Spec',
-  //     Usage: formValue.usage,
-  //     Qty: formValue.qty,
-  //     Result1: 'Result1',
-  //     Result2: 'Result2',
-  //     Result3: 'Result3',
-  //     Result4: 'Result4',
-  //     Result5: 'Result5',
-  //     Result6: 'Result6',
-  //     Case: ''
-  //   };
-  //   this.addData(newRequest);
-  //   this.requestForm.reset(); // Reset form after submission
-  // }
-
-  // addData(newRequest: RequestElement) {
-  //   // Add new data to the data source
-  //   const data = this.dataSource.data;
-  //   data.push(newRequest);
-  //   this.dataSource.data = data;
-  // }
-
-
 }

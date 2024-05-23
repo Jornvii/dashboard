@@ -1,6 +1,8 @@
 <div class="wrapper">
   <div class="container">
     <h1>Form Request</h1>
+
+
     <form action="" id="ft-form" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
       <fieldset>
         <div class="two-cols">
@@ -126,72 +128,78 @@
 
           <!-- ToolingSpec Column -->
           <ng-container matColumnDef="ToolingSpec">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>ToolingSpec</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Tooling Spec</th>
             <td mat-cell *matCellDef="let element">{{ element.ToolingSpec }}</td>
           </ng-container>
 
           <!-- Usage Column -->
           <ng-container matColumnDef="Usage">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Std.Usage</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Std Usage</th>
             <td mat-cell *matCellDef="let element">{{ element.Usage }}</td>
+          </ng-container>
+
+          <!-- Case Column -->
+          <ng-container matColumnDef="Case">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Case</th>
+            <td mat-cell *matCellDef="let element">{{ element.Case }}</td>
           </ng-container>
 
           <!-- Qty Column -->
           <ng-container matColumnDef="Qty">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Qty</th>
             <td mat-cell *matCellDef="let element">
-              <mat-form-field>
-                <input matInput [(ngModel)]="element.Qty">
+              <mat-form-field class="input-field">
+                <input matInput class="input-element">
               </mat-form-field>
             </td>
           </ng-container>
 
           <!-- Result1 Column -->
           <ng-container matColumnDef="Result1">
-            <th mat-header-cell *matHeaderCellDef >Result1</th>
+            <th mat-header-cell *matHeaderCellDef>Result1</th>
             <td mat-cell *matCellDef="let element">
-              <mat-form-field>
-                <input matInput [(ngModel)]="element.Result1">
+              <mat-form-field class="input-field">
+                <input matInput class="input-element">
               </mat-form-field>
             </td>
           </ng-container>
 
           <!-- Result2 Column -->
           <ng-container matColumnDef="Result2">
-            <th mat-header-cell *matHeaderCellDef >Result2</th>
+            <th mat-header-cell *matHeaderCellDef>Result2</th>
             <td mat-cell *matCellDef="let element">
-              <mat-form-field>
-                <input matInput [(ngModel)]="element.Result2">
+              <mat-form-field class="input-field">
+                <input matInput class="input-element">
               </mat-form-field>
             </td>
           </ng-container>
 
           <!-- Result3 Column -->
           <ng-container matColumnDef="Result3">
-            <th mat-header-cell *matHeaderCellDef >Result3</th>
+            <th mat-header-cell *matHeaderCellDef>Result3</th>
             <td mat-cell *matCellDef="let element">
-              <mat-form-field>
-                <input matInput [(ngModel)]="element.Result3">
+              <mat-form-field class="input-field">
+                <input matInput class="input-element">
               </mat-form-field>
             </td>
           </ng-container>
 
           <!-- Result4 Column -->
           <ng-container matColumnDef="Result4">
-            <th mat-header-cell *matHeaderCellDef >Result4</th>
+            <th mat-header-cell *matHeaderCellDef>Result4</th>
             <td mat-cell *matCellDef="let element">
-              <mat-form-field>
-                <input matInput [(ngModel)]="element.Result4">
+              <mat-form-field class="input-field">
+                <input matInput class="input-element">
               </mat-form-field>
             </td>
           </ng-container>
 
           <!-- Result5 Column -->
           <ng-container matColumnDef="Result5">
-            <th mat-header-cell *matHeaderCellDef >Result5</th>
+            <th mat-header-cell *matHeaderCellDef>Result5</th>
             <td mat-cell *matCellDef="let element">
-              <mat-form-field>
-                <input matInput [(ngModel)]="element.Result5">
+              <mat-form-field class="input-field">
+                <input matInput class="input-element">
               </mat-form-field>
             </td>
           </ng-container>
@@ -200,18 +208,19 @@
           <ng-container matColumnDef="Result6">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Result6</th>
             <td mat-cell *matCellDef="let element">
-              <mat-form-field>
-                <input matInput [(ngModel)]="element.Result6">
+              <mat-form-field class="input-field">
+                <input matInput class="input-element">
               </mat-form-field>
             </td>
           </ng-container>
 
           <!-- Table rows -->
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns" [class.selected]="selection.isSelected(row)"></tr>
         </table>
       </div>
     </div>
+
 
 
     <div class="btns">
