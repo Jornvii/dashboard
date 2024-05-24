@@ -5,19 +5,9 @@
     <form [formGroup]="requestForm" (ngSubmit)="onSubmit()">
       <fieldset>
         <div class="two-cols">
-          <!-- <label>
-            Division
-            <div class="custom-select">
-              <mat-select [(value)]="selectedDivision">
-                <mat-option *ngFor="let division of divisions" [value]="division.division">
-                  {{ division.viewDivision }}
-                </mat-option>
-              </mat-select>
-            </div>
-          </label> -->
           <label>
             Part No *
-            <input type="text" formControlName="PartNo" placeholder="Enter part number" required />
+            <input type="text" formControlName="PartNo" (ngModelChange)="getProcess()" placeholder="Enter part number" required />
             <div *ngIf="partNoSuggestions.length > 0">
               <ul>
                 <li *ngFor="let partNo of partNoSuggestions">{{ partNo }}</li>
@@ -28,7 +18,7 @@
           <label>
             Process
             <div class="custom-select">
-              <mat-select formControlName="Process">
+              <mat-select formControlName="Process" (ngModelChange)="getMC()">
                 <mat-option *ngFor="let option of processOptions" [value]="option">
                   {{ option }}
                 </mat-option>
@@ -46,23 +36,14 @@
               </mat-select>
             </div>
           </label>
-
         </div>
       </fieldset>
 
       <div class="btns">
-        <button type="submit" (ngSubmit)="onSubmit()" class="sub-button">Show Item</button>
+        <button type="submit" class="sub-button">Show Item</button>
         <input class="red-button" type="button" value="Clear" (click)="requestForm.reset()" />
       </div>
     </form>
 
-    <div class="table-container">
-      <h3 style="text-align: center; font-weight: 900; font-size: 18px">Your Request Result</h3>
-      <div class="mat-elevation-z8"></div>
-    </div>
-
-    <div class="btns">
-      <button type="submit" class="sub-button">Submit ➤</button>
-    </div>
   </div>
 </div>
