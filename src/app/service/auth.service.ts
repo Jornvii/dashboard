@@ -48,17 +48,19 @@ export class AuthService {
   }
 
   // Fetch get data to show suggestion PartNo when write PartNo
-  get_onlyPartNo(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/get_onlyPartNo`,data);
+  Post_PartNo(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Post_PartNo`,data);
+    console.log(data);
   }
  // Fetch process options based on PartNo
-  getProcesses(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/getProcesses`, data);
+  Post_Process(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Post_Process`, data);
   }
-  getMachines(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/getMachines`, data);
+   // Fetch MC options based on PartNo and Process
+  GetMC(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Post_MC`, data);
   }
-  getDetails(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/getDetails`, data);
+  Post_ToolDetial(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Post_ToolDetial`, data);
   }
 }

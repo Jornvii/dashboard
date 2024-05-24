@@ -2,10 +2,10 @@
   <div class="container">
     <h1>Form Request</h1>
 
-    <form  [formGroup]="requestForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="requestForm" (ngSubmit)="onSubmit()">
       <fieldset>
         <div class="two-cols">
-          <label>
+          <!-- <label>
             Division
             <div class="custom-select">
               <mat-select [(value)]="selectedDivision">
@@ -14,14 +14,13 @@
                 </mat-option>
               </mat-select>
             </div>
-          </label>
-
+          </label> -->
           <label>
             Part No *
-            <input type="text" formControlName="PartNo" placeholder="Enter part number" (input)="fetchPartNoSuggestions()" required />
+            <input type="text" formControlName="PartNo" placeholder="Enter part number" required />
             <div *ngIf="partNoSuggestions.length > 0">
               <ul>
-                <li *ngFor="let partNo of partNoSuggestions" (click)="onPartNoSelected(partNo)">{{ partNo }}</li>
+                <li *ngFor="let partNo of partNoSuggestions">{{ partNo }}</li>
               </ul>
             </div>
           </label>
@@ -41,8 +40,8 @@
             MC
             <div class="custom-select">
               <mat-select formControlName="MC">
-                <mat-option *ngFor="let option of machineOptions" [value]="option">
-                  {{ option }}
+                <mat-option *ngFor="let mc of MCOptions" [value]="mc">
+                  {{ mc }}
                 </mat-option>
               </mat-select>
             </div>
@@ -52,7 +51,7 @@
       </fieldset>
 
       <div class="btns">
-        <button type="submit" class="sub-button">Show Item</button>
+        <button type="submit" (ngSubmit)="onSubmit()" class="sub-button">Show Item</button>
         <input class="red-button" type="button" value="Clear" (click)="requestForm.reset()" />
       </div>
     </form>
