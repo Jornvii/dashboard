@@ -15,15 +15,24 @@
               </mat-select>
             </div>
           </label>
+
+          <!-- <label>
+            Part No *
+            <input type="text" formControlName="PartNo" [matAutocomplete]="auto" placeholder="Enter part number" required />
+          </label>
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let suggestion of partNoSuggestions" [value]="suggestion">
+              {{ suggestion }}
+            </mat-option>
+          </mat-autocomplete> -->
+
+
+
           <label>
             Part No *
             <input type="text" formControlName="PartNo" (ngModelChange)="getProcess()" placeholder="Enter part number"
               required />
-            <div *ngIf="partNoSuggestions.length > 0">
-              <ul>
-                <li *ngFor="let partNo of partNoSuggestions">{{ partNo }}</li>
-              </ul>
-            </div>
+
           </label>
 
           <label>

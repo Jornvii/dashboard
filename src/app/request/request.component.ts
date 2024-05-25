@@ -1,10 +1,11 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from '../service/auth.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
+import { debounceTime, distinctUntilChanged, Observable, switchMap } from 'rxjs';
 
 
 interface ToolDetail {
@@ -31,7 +32,6 @@ interface ToolDetail {
 })
 export class RequestComponent implements OnInit {
   requestForm: FormGroup;
-  partNoSuggestions: string[] = [];
   processOptions: string[] = [];
   MCOptions: string[] = [];
   dataSource = new MatTableDataSource<ToolDetail>();
@@ -101,6 +101,7 @@ export class RequestComponent implements OnInit {
   }
   ngOnInit(): void {
     this.dataSource.sort = this.sort;
+
   }
 
   getProcess() {

@@ -5,7 +5,7 @@ import {
   provideClientHydration,
 } from '@angular/platform-browser';
 
-
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -39,9 +39,11 @@ import {
   withFetch,
 } from '@angular/common/http';
 import { AuthService } from './service/auth.service';
+import { AsyncPipe } from '@angular/common';
 
 @NgModule({
   declarations: [
+
     AppComponent,
     HeaderComponent,
     SideNavComponent,
@@ -58,6 +60,8 @@ import { AuthService } from './service/auth.service';
     RegisterComponent,
   ],
   imports: [
+    AsyncPipe,
+    MatAutocompleteModule,
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
