@@ -1,5 +1,4 @@
 interface ToolDetail {
-  No: number;
   PartNo: string;
   ItemNo: string;
   MC: string;

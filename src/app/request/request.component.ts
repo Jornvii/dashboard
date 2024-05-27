@@ -195,14 +195,6 @@ export class RequestComponent implements OnInit, AfterViewInit {
 
 
 
-  // toggleSelection(row: ToolDetail) {
-  //   const wasSelected = this.selection.isSelected(row);
-  //   this.selection.toggle(row);
-
-  //   if (!wasSelected && this.selection.isSelected(row)) {
-  //     console.log('Selected Row Data:', row);
-  //   }
-  // }
   toggleSelection(row: ToolDetail) {
     const wasSelected = this.selection.isSelected(row);
     this.selection.toggle(row);
@@ -211,26 +203,85 @@ export class RequestComponent implements OnInit, AfterViewInit {
       console.log('Selected Row Data:',row);
     }
   }
+  // insertRowIntoDatabase(rowData: any) {
+  //   // Replace this with your actual database insertion logic
+  //   this.authService.insertRows(rowData).subscribe(
+  //     (response) => {
+  //       console.log('Data inserted successfully:', response);
+  //       this.requestForm.reset();
+  //     },
+  //     (error) => {
+  //       console.error('Error inserting data into the database:', error);
+  //       // Handle the error appropriately
+  //     }
+  //   );
+  // }
+
+///////////////////////////////////////
+insertSelectedRows() {
+  const selectedRows = this.selection.selected;
+
+  if (selectedRows.length === 0) {
+    console.log('No rows selected.');
+    return;
+  }
 
 
-  onInsertSelectedRows() {
-    const selectedRows = this.selection.selected;
-    const additionalData = {
+  selectedRows.forEach(row => {
+    const rowData = {
+      ...row,
       selectedDivision: this.selectedDivision,
       revPart: this.requestForm.get('revPart')?.value,
       selectedCase: this.selectedCase,
-      dateOfReq: this.requestForm.get('dateOfReq')?.value,
+      dateOfReq: this.requestForm.get('dateOfReq')?.value
     };
 
-    const dataToInsert = selectedRows.map(row => ({
-      ...row,
-      ...additionalData
-    }));
-
-    this.authService.insertSelectedRows(dataToInsert).subscribe(response => {
-      console.log('Insert successful:', response);
-    }, error => {
-      console.error('Insert failed:', error);
-    });
-  }
+    this.insertRowIntoDatabase(rowData);
+  });
 }
+
+insertRowIntoDatabase(rowData: any) {
+
+  console.log('Inserting row data into database:', rowData);
+  this.authService.insertRows(rowData).subscribe(rowDataresponse => {
+        console.log('Insert successful:', rowDataresponse);
+      }, error => {
+        console.error('Insert failed:', error);
+      });
+
+
+  this.authService.insertRows(rowData).subscribe(
+    (insertRowsresponse) => {
+      console.log('Data inserted successfully:', insertRowsresponse);
+      this.requestForm.reset();
+    })
+}
+
+
+
+
+
+
+
+
+}
+  // onInsertSelectedRows() {
+  //   const selectedRows = this.selection.selected;
+  //   const additionalData = {
+  //     selectedDivision: this.selectedDivision,
+  //     revPart: this.requestForm.get('revPart')?.value,
+  //     selectedCase: this.selectedCase,
+  //     dateOfReq: this.requestForm.get('dateOfReq')?.value,
+  //   };
+
+  //   const dataToInsert = selectedRows.map(row => ({
+  //     ...row,
+  //     ...additionalData
+  //   }));
+
+  //   this.authService.insertSelectedRows(dataToInsert).subscribe(response => {
+  //     console.log('Insert successful:', response);
+  //   }, error => {
+  //     console.error('Insert failed:', error);
+  //   });
+  // }
