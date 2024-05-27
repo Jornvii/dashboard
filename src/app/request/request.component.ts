@@ -1,28 +1,33 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../service/auth.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { SelectionModel } from '@angular/cdk/collections';
+import { DataSource, SelectionChange, SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
-import { debounceTime, distinctUntilChanged, Observable, switchMap } from 'rxjs';
+import { MatSelectionListChange } from '@angular/material/list';
+import { Data } from '@angular/router';
 
 
 interface ToolDetail {
-  No: number;
   PartNo: string;
   ItemNo: string;
   MC: string;
   Process: string;
   Spec: string;
   Usage_pcs: number;
-  Qty: number;
-  Result1: string;
-  Result2: string;
-  Result3: string
-  Result4: string;
-  Result5: string;
-  Result6: string;
+  MCNo?: string;
+  Qty?: number;
+  Result1?: string;
+  Result2?: string;
+  Result3?: string;
+  Result4?: string;
+  Result5?: string;
+  Result6?: string;
+  selectedDivision?: string;
+  revPart?: string;
+  selectedCase?: string;
+  dateOfReq?: string;
 }
 
 @Component({
@@ -30,20 +35,21 @@ interface ToolDetail {
   templateUrl: './request.component.html',
   styleUrls: ['./request.component.scss'],
 })
-export class RequestComponent implements OnInit {
+export class RequestComponent implements OnInit, AfterViewInit {
   requestForm: FormGroup;
   processOptions: string[] = [];
   MCOptions: string[] = [];
   dataSource = new MatTableDataSource<ToolDetail>();
+  selection = new SelectionModel<ToolDetail>(true, []);
   displayedColumns: string[] = [
     'select',
-    'No',
     'PartNo',
     'ItemNo',
     'MC',
     'Process',
     'Spec',
     'Usage_pcs',
+    'MCNo',
     'Qty',
     'Result1',
     'Result2',
@@ -52,7 +58,6 @@ export class RequestComponent implements OnInit {
     'Result5',
     'Result6',
   ];
-  selection = new SelectionModel<ToolDetail>(true, []);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -81,7 +86,6 @@ export class RequestComponent implements OnInit {
     { Case: 'CHA', viewCase: 'CHA' },
   ];
 
-
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService
@@ -93,15 +97,18 @@ export class RequestComponent implements OnInit {
       PartNo: [''],
       Process: [''],
       MC: [''],
+      revPart: [''],
+      dateOfReq: [''],
     });
   }
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+
   ngOnInit(): void {
     this.dataSource.sort = this.sort;
-
   }
 
   getProcess() {
@@ -158,14 +165,72 @@ export class RequestComponent implements OnInit {
     return numSelected === numRows;
   }
 
-  masterToggle() {
-    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(row => this.selection.select(row));
+  toggleAllRows() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+
+    this.selection.select(...this.dataSource.data);
   }
+  // toggleAllRows() {
+  //   if (this.isAllSelected()) {
+  //     this.selection.clear();
+  //     return;
+  //   }
+
+  //   const selectedRows = this.dataSource.data.filter(row => this.selection.isSelected(row));
+  //   selectedRows.forEach(row => console.log(row));
+  //   this.selection.select(...this.dataSource.data);
+  // }
+
 
   checkboxLabel(row?: ToolDetail): string {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.No + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.PartNo + 1}`;
+  }
+
+
+
+
+  // toggleSelection(row: ToolDetail) {
+  //   const wasSelected = this.selection.isSelected(row);
+  //   this.selection.toggle(row);
+
+  //   if (!wasSelected && this.selection.isSelected(row)) {
+  //     console.log('Selected Row Data:', row);
+  //   }
+  // }
+  toggleSelection(row: ToolDetail) {
+    const wasSelected = this.selection.isSelected(row);
+    this.selection.toggle(row);
+
+    if (!wasSelected && this.selection.isSelected(row)) {
+      console.log('Selected Row Data:',row);
+    }
+  }
+
+
+  onInsertSelectedRows() {
+    const selectedRows = this.selection.selected;
+    const additionalData = {
+      selectedDivision: this.selectedDivision,
+      revPart: this.requestForm.get('revPart')?.value,
+      selectedCase: this.selectedCase,
+      dateOfReq: this.requestForm.get('dateOfReq')?.value,
+    };
+
+    const dataToInsert = selectedRows.map(row => ({
+      ...row,
+      ...additionalData
+    }));
+
+    this.authService.insertSelectedRows(dataToInsert).subscribe(response => {
+      console.log('Insert successful:', response);
+    }, error => {
+      console.error('Insert failed:', error);
+    });
   }
 }

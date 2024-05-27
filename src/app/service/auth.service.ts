@@ -6,7 +6,7 @@ import {
 } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
+import { Data } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
@@ -63,4 +63,10 @@ export class AuthService {
   Post_ToolDetial(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/Post_ToolDetial`, data);
   }
+
+
+  insertSelectedRows(data: any): Observable<any> {
+    return this.http.post('/api/requestTool', data);
+  }
+
 }
