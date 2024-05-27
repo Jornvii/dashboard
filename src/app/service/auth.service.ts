@@ -66,7 +66,7 @@ export class AuthService {
 
 
   insertRows(rows: any[]): Observable<any> {
-    return this.http.post(`${this.apiUrl}/insert-rows`, rows);
+    return this.http.post(`${this.apiUrl}/requestTool`, rows);
   }
 
   // insertSelectedRows(data: any): Observable<any> {
