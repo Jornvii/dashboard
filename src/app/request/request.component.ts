@@ -14,7 +14,7 @@ interface ToolDetail {
   ItemNo: string;
   MC: string;
   Process: string;
-  Spec: string;
+  SPEC: string;
   Usage_pcs: number;
   MCNo?: string;
   Qty?: number;
@@ -24,9 +24,9 @@ interface ToolDetail {
   Result4?: string;
   Result5?: string;
   Result6?: string;
-  selectedDivision?: string;
-  revPart?: string;
-  selectedCase?: string;
+  _Division?: string;
+  Revision?: string;
+  Case_?: string;
   dateOfReq?: string;
 }
 
@@ -47,7 +47,7 @@ export class RequestComponent implements OnInit, AfterViewInit {
     'ItemNo',
     'MC',
     'Process',
-    'Spec',
+    'SPEC',
     'Usage_pcs',
     'MCNo',
     'Qty',
@@ -62,8 +62,8 @@ export class RequestComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  selectedDivision: string;
-  selectedCase: string;
+  _Division: string;
+  Case_: string;
 
   divisions = [
     { division: '---', viewDivision: '---' },
@@ -90,14 +90,14 @@ export class RequestComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
     private authService: AuthService
   ) {
-    this.selectedDivision = this.divisions[0].division;
-    this.selectedCase = this.Cases[0].Case;
+    this._Division = this.divisions[0].division;
+    this.Case_ = this.Cases[0].Case;
 
     this.requestForm = this.formBuilder.group({
-      PartNo: [''],
-      Process: [''],
-      MC: [''],
-      revPart: [''],
+      OPIST_PartNo: [''],
+      OPIST_Process: [''],
+      OPIST_MC: [''],
+      Revision: [''],
       dateOfReq: [''],
     });
   }
@@ -112,25 +112,30 @@ export class RequestComponent implements OnInit, AfterViewInit {
   }
 
   getProcess() {
-    const PartNo = this.requestForm.get('PartNo')?.value;
-    this.authService.Post_Process({ PartNo }).subscribe((processResponse) => {
+    const OPIST_PartNo = this.requestForm.get('OPIST_PartNo')?.value;
+    this.authService.Post_Process({ OPIST_PartNo }).subscribe((processResponse) => {
       if (processResponse.length > 0 && processResponse[0].length > 0) {
-        this.processOptions = processResponse[0].map(
-          (item: any) => item.Process
-        );
+        this.processOptions = processResponse[0].map((item: any) => {
+          console.log(item);
+          return item.OPIST_Process;
+        });
       }
     });
   }
 
-  getMC() {
-    const PartNo = this.requestForm.get('PartNo')?.value;
-    const Process = this.requestForm.get('Process')?.value;
 
-    if (PartNo && Process) {
-      this.authService.GetMC({ PartNo, Process }).subscribe(
+  getMC() {
+    const OPIST_PartNo = this.requestForm.get('OPIST_PartNo')?.value;
+    const OPIST_Process = this.requestForm.get('OPIST_Process')?.value;
+
+    if (OPIST_PartNo && OPIST_Process) {
+      this.authService.GetMC({ OPIST_PartNo, OPIST_Process }).subscribe(
         (MCResponse) => {
           if (MCResponse.length > 0 && MCResponse[0].length > 0) {
-            this.MCOptions = MCResponse[0].map((item: any) => item.MC);
+            this.MCOptions = MCResponse[0].map((
+              item: any) => item.OPIST_MC,
+              console.log(MCResponse)
+              );
           } else {
             console.error('MC options not found.');
           }
@@ -141,16 +146,21 @@ export class RequestComponent implements OnInit, AfterViewInit {
       );
     }
   }
-
   onSubmit() {
-    const PartNo = this.requestForm.get('PartNo')?.value;
-    const Process = this.requestForm.get('Process')?.value;
-    const MC = this.requestForm.get('MC')?.value;
+    const OPIST_PartNo = this.requestForm.get('OPIST_PartNo')?.value;
+    const OPIST_Process = this.requestForm.get('OPIST_Process')?.value;
+    const OPIST_MC = this.requestForm.get('OPIST_MC')?.value;
 
-    if (PartNo && Process && MC) {
-      const data = { PartNo, Process, MC };
+    // console.log('Form Values:', { OPIST_PartNo, OPIST_Process, OPIST_MC });
+
+    if (OPIST_PartNo && OPIST_Process && OPIST_MC) {
+      const data = { OPIST_PartNo, OPIST_Process, OPIST_MC };
+      console.log('Data sent to API:', data);
+
       this.authService.Post_ToolDetial(data).subscribe({
         next: (response) => {
+          console.log('API Response:', response);
+
           if (response.length > 0 && response[0].length > 0) {
             this.dataSource.data = response[0] as ToolDetail[];
           }
@@ -158,6 +168,23 @@ export class RequestComponent implements OnInit, AfterViewInit {
       });
     }
   }
+
+  // onSubmit() {
+  //   const OPIST_PartNo = this.requestForm.get('OPIST_PartNo')?.value;
+  //   const OPIST_Process = this.requestForm.get('OPIST_Process')?.value;
+  //   const OPIST_MC = this.requestForm.get('OPIST_MC')?.value;
+
+  //   if (OPIST_PartNo && OPIST_Process && OPIST_MC) {
+  //     const data = { OPIST_PartNo, OPIST_Process, OPIST_MC };
+  //     this.authService.Post_ToolDetial(data).subscribe({
+  //       next: (response) => {
+  //         if (response.length > 0 && response[0].length > 0) {
+  //           this.dataSource.data = response[0] as ToolDetail[];
+  //         }
+  //       },
+  //     });
+  //   }
+  // }
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -230,9 +257,9 @@ insertSelectedRows() {
   selectedRows.forEach(row => {
     const rowData = {
       ...row,
-      selectedDivision: this.selectedDivision,
-      revPart: this.requestForm.get('revPart')?.value,
-      selectedCase: this.selectedCase,
+      _Division: this._Division,
+      Revision: this.requestForm.get('Revision')?.value,
+      Case_: this.Case_,
       dateOfReq: this.requestForm.get('dateOfReq')?.value
     };
 
@@ -242,12 +269,11 @@ insertSelectedRows() {
 
 insertRowIntoDatabase(rowData: any) {
 
-  console.log('Inserting row data into database:', rowData);
-  this.authService.insertRows(rowData).subscribe(rowDataresponse => {
-        console.log('Insert successful:', rowDataresponse);
-      }, error => {
-        console.error('Insert failed:', error);
-      });
+  // console.log('Inserting row data into database:', rowData);
+  // this.authService.insertRows(rowData).subscribe(rowDataresponse => {
+  //       console.log('Insert successful:', rowDataresponse);
+
+  //     });
 
 
   this.authService.insertRows(rowData).subscribe(
@@ -268,9 +294,9 @@ insertRowIntoDatabase(rowData: any) {
   // onInsertSelectedRows() {
   //   const selectedRows = this.selection.selected;
   //   const additionalData = {
-  //     selectedDivision: this.selectedDivision,
-  //     revPart: this.requestForm.get('revPart')?.value,
-  //     selectedCase: this.selectedCase,
+  //     _Division: this._Division,
+  //     Revision: this.requestForm.get('Revision')?.value,
+  //     Case_: this.Case_,
   //     dateOfReq: this.requestForm.get('dateOfReq')?.value,
   //   };
 

@@ -8,7 +8,7 @@
           <label>
             Division
             <div class="custom-select">
-              <mat-select [(value)]="selectedDivision">
+              <mat-select [(value)]="_Division">
                 <mat-option *ngFor="let division of divisions" [value]="division.division">
                   {{ division.viewDivision }}
                 </mat-option>
@@ -18,14 +18,14 @@
 
           <label>
             Part No *
-            <input type="text" formControlName="PartNo" (ngModelChange)="getProcess()" placeholder="Enter part number"
+            <input type="text" formControlName="OPIST_PartNo" (ngModelChange)="getProcess()" placeholder="Enter part number" class="partNo"
               required />
           </label>
 
           <label>
             Process
             <div class="custom-select">
-              <mat-select formControlName="Process" (ngModelChange)="getMC()">
+              <mat-select formControlName="OPIST_Process" (ngModelChange)="getMC()">
                 <mat-option *ngFor="let option of processOptions" [value]="option">{{ option }}</mat-option>
               </mat-select>
             </div>
@@ -37,7 +37,7 @@
           <label>
             MC
             <div class="custom-select">
-              <mat-select formControlName="MC">
+              <mat-select formControlName="OPIST_MC">
                 <mat-option *ngFor="let mc of MCOptions" [value]="mc">{{ mc }}</mat-option>
               </mat-select>
             </div>
@@ -45,7 +45,7 @@
 
           <label>
             Rev Part *
-            <input formControlName="revPart" placeholder="Drawing" required />
+            <input formControlName="Revision" placeholder="Drawing" required />
           </label>
         </div>
 
@@ -53,7 +53,7 @@
           <label>
             Case
             <div class="custom-select">
-              <mat-select [(value)]="selectedCase">
+              <mat-select [(value)]="Case_">
                 <mat-option *ngFor="let caseOption of Cases" [value]="caseOption.Case">
                   {{ caseOption.viewCase }}
                 </mat-option>
@@ -113,17 +113,17 @@
             <!-- Part No Column -->
             <ng-container matColumnDef="PartNo">
               <th mat-header-cell *matHeaderCellDef> Part No </th>
-              <td mat-cell *matCellDef="let element"> {{ element.PartNo }} </td>
+              <td mat-cell *matCellDef="let element"> {{ element.OPIST_PartNo }} </td>
             </ng-container>
 
             <ng-container matColumnDef="ItemNo">
               <th mat-header-cell *matHeaderCellDef> Item No </th>
-              <td mat-cell *matCellDef="let element"> {{ element.ItemNo }} </td>
+              <td mat-cell *matCellDef="let element"> {{ element.ITEM_NO }} </td>
             </ng-container>
 
             <ng-container matColumnDef="MC">
               <th mat-header-cell *matHeaderCellDef> MC </th>
-              <td mat-cell *matCellDef="let element"> {{ element.MC }} </td>
+              <td mat-cell *matCellDef="let element"> {{ element.OPIST_MC }} </td>
             </ng-container>
 
             <ng-container matColumnDef="Master_Tooling_ID">
@@ -133,17 +133,18 @@
 
             <ng-container matColumnDef="Process">
               <th mat-header-cell *matHeaderCellDef> Process </th>
-              <td mat-cell *matCellDef="let element"> {{ element.Process }} </td>
+              <td mat-cell *matCellDef="let element"> {{ element.OPIST_Process}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="Spec">
-              <th mat-header-cell *matHeaderCellDef> Spec </th>
-              <td mat-cell *matCellDef="let element"> {{ element.Spec }} </td>
+            <ng-container matColumnDef="SPEC">
+              <th mat-header-cell *matHeaderCellDef> SPEC </th>
+              <td mat-cell *matCellDef="let element"> {{ element.SPEC }} </td>
             </ng-container>
 
             <ng-container matColumnDef="Usage_pcs">
               <th mat-header-cell *matHeaderCellDef> Usage pcs </th>
-              <td mat-cell *matCellDef="let element"> {{ element.Usage_pcs }} </td>
+              <td mat-cell *matCellDef="let element"> {{ element.OPIST_Usage_pcs
+              }} </td>
             </ng-container>
 
             <ng-container matColumnDef="MCNo">

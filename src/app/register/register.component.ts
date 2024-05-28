@@ -22,6 +22,7 @@ export class RegisterComponent implements OnInit {
       Emp_Code: ['', Validators.required],
       Emp_Name: ['', Validators.required],
       Emp_Surname: ['', Validators.required],
+      Emp_Pwd: ['', Validators.required],
       Emp_Position: ['', Validators.required]
     });
   }
