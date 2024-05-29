@@ -3,11 +3,14 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../service/auth.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { DataSource, SelectionChange, SelectionModel } from '@angular/cdk/collections';
+import {
+  DataSource,
+  SelectionChange,
+  SelectionModel,
+} from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSelectionListChange } from '@angular/material/list';
 import { Data } from '@angular/router';
-
 
 interface ToolDetail {
   PartNo: string;
@@ -113,16 +116,17 @@ export class RequestComponent implements OnInit, AfterViewInit {
 
   getProcess() {
     const OPIST_PartNo = this.requestForm.get('OPIST_PartNo')?.value;
-    this.authService.Post_Process({ OPIST_PartNo }).subscribe((processResponse) => {
-      if (processResponse.length > 0 && processResponse[0].length > 0) {
-        this.processOptions = processResponse[0].map((item: any) => {
-          console.log(item);
-          return item.OPIST_Process;
-        });
-      }
-    });
+    this.authService
+      .Post_Process({ OPIST_PartNo })
+      .subscribe((processResponse) => {
+        if (processResponse.length > 0 && processResponse[0].length > 0) {
+          this.processOptions = processResponse[0].map((item: any) => {
+            console.log(item);
+            return item.OPIST_Process;
+          });
+        }
+      });
   }
-
 
   getMC() {
     const OPIST_PartNo = this.requestForm.get('OPIST_PartNo')?.value;
@@ -132,10 +136,10 @@ export class RequestComponent implements OnInit, AfterViewInit {
       this.authService.GetMC({ OPIST_PartNo, OPIST_Process }).subscribe(
         (MCResponse) => {
           if (MCResponse.length > 0 && MCResponse[0].length > 0) {
-            this.MCOptions = MCResponse[0].map((
-              item: any) => item.OPIST_MC,
+            this.MCOptions = MCResponse[0].map(
+              (item: any) => item.OPIST_MC,
               console.log(MCResponse)
-              );
+            );
           } else {
             console.error('MC options not found.');
           }
@@ -211,23 +215,21 @@ export class RequestComponent implements OnInit, AfterViewInit {
   //   this.selection.select(...this.dataSource.data);
   // }
 
-
   checkboxLabel(row?: ToolDetail): string {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.PartNo + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+      row.PartNo + 1
+    }`;
   }
-
-
-
 
   toggleSelection(row: ToolDetail) {
     const wasSelected = this.selection.isSelected(row);
     this.selection.toggle(row);
 
     if (!wasSelected && this.selection.isSelected(row)) {
-      console.log('Selected Row Data:',row);
+      console.log('Selected Row Data:', row);
     }
   }
   // insertRowIntoDatabase(rowData: any) {
@@ -244,70 +246,76 @@ export class RequestComponent implements OnInit, AfterViewInit {
   //   );
   // }
 
-///////////////////////////////////////
-insertSelectedRows() {
-  const selectedRows = this.selection.selected;
+  ///////////////////////////////////////
+  insertSelectedRows() {
+    const selectedRows = this.selection.selected;
 
-  if (selectedRows.length === 0) {
-    console.log('No rows selected.');
-    return;
+    if (selectedRows.length === 0) {
+      console.log('No rows selected.');
+      return;
+    }
+
+    selectedRows.forEach((row) => {
+      const rowData = {
+        ...row,
+        _Division: this._Division,
+        Revision: this.requestForm.get('Revision')?.value,
+        Case_: this.Case_,
+        dateOfReq: this.requestForm.get('dateOfReq')?.value,
+      };
+
+      this.insertRowIntoDatabase(rowData);
+    });
   }
 
+  insertRowIntoDatabase(rowData: any) {
+    console.log('Inserting row data into database:', rowData);
+    this.authService.insertRows(rowData).subscribe((rowDataresponse) => {
+      console.log('Insert successful:', rowDataresponse);
 
-  selectedRows.forEach(row => {
-    const rowData = {
-      ...row,
-      _Division: this._Division,
-      Revision: this.requestForm.get('Revision')?.value,
-      Case_: this.Case_,
-      dateOfReq: this.requestForm.get('dateOfReq')?.value
-    };
+      // Reset table and form
+      this.resetTable();
+      this.resetForm();
+    });
+  }
 
-    this.insertRowIntoDatabase(rowData);
-  });
-}
+  resetTable() {
+    this.dataSource.data = [];
+  }
 
-insertRowIntoDatabase(rowData: any) {
-
-  // console.log('Inserting row data into database:', rowData);
-  // this.authService.insertRows(rowData).subscribe(rowDataresponse => {
-  //       console.log('Insert successful:', rowDataresponse);
-
-  //     });
-
-
-  this.authService.insertRows(rowData).subscribe(
-    (insertRowsresponse) => {
-      console.log('Data inserted successfully:', insertRowsresponse);
-      this.requestForm.reset();
-    })
+  resetForm() {
+    this.requestForm.reset();
+  }
 }
 
 
 
 
 
+  // this.authService.insertRows(rowData).subscribe(
+  //   (insertRowsresponse) => {
+  //     console.log('Data inserted successfully:', insertRowsresponse);
+
+  //   })
 
 
+// onInsertSelectedRows() {
+//   const selectedRows = this.selection.selected;
+//   const additionalData = {
+//     _Division: this._Division,
+//     Revision: this.requestForm.get('Revision')?.value,
+//     Case_: this.Case_,
+//     dateOfReq: this.requestForm.get('dateOfReq')?.value,
+//   };
 
-}
-  // onInsertSelectedRows() {
-  //   const selectedRows = this.selection.selected;
-  //   const additionalData = {
-  //     _Division: this._Division,
-  //     Revision: this.requestForm.get('Revision')?.value,
-  //     Case_: this.Case_,
-  //     dateOfReq: this.requestForm.get('dateOfReq')?.value,
-  //   };
+//   const dataToInsert = selectedRows.map(row => ({
+//     ...row,
+//     ...additionalData
+//   }));
 
-  //   const dataToInsert = selectedRows.map(row => ({
-  //     ...row,
-  //     ...additionalData
-  //   }));
-
-  //   this.authService.insertSelectedRows(dataToInsert).subscribe(response => {
-  //     console.log('Insert successful:', response);
-  //   }, error => {
-  //     console.error('Insert failed:', error);
-  //   });
-  // }
+//   this.authService.insertSelectedRows(dataToInsert).subscribe(response => {
+//     console.log('Insert successful:', response);
+//   }, error => {
+//     console.error('Insert failed:', error);
+//   });
+// }
