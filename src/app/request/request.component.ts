@@ -11,7 +11,7 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSelectionListChange } from '@angular/material/list';
 import { Data } from '@angular/router';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 interface ToolDetail {
   PartNo: string;
   ItemNo: string;
@@ -90,6 +90,7 @@ export class RequestComponent implements OnInit, AfterViewInit {
   ];
 
   constructor(
+    private snackBar: MatSnackBar,
     private formBuilder: FormBuilder,
     private authService: AuthService
   ) {
@@ -183,9 +184,8 @@ export class RequestComponent implements OnInit, AfterViewInit {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.PartNo + 1
-    }`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.PartNo + 1
+      }`;
   }
 
   toggleSelection(row: ToolDetail) {
@@ -206,6 +206,9 @@ export class RequestComponent implements OnInit, AfterViewInit {
     this.selection.select(...this.dataSource.data);
   }
 
+
+
+
   insertSelectedRows() {
     const selectedRows = this.selection.selected;
 
@@ -213,6 +216,7 @@ export class RequestComponent implements OnInit, AfterViewInit {
       console.log('No rows selected.');
       return;
     }
+
 
     selectedRows.forEach((row) => {
       const rowData = {
@@ -232,17 +236,46 @@ export class RequestComponent implements OnInit, AfterViewInit {
     this.authService.insertRows(rowData).subscribe((rowDataresponse) => {
       console.log('Insert successful:', rowDataresponse);
 
-      // Reset table and form
+      this.showNotification('Request successful', 'success');
+
       this.resetTable();
-      this.resetForm();
+    }, (error) => {
+      this.showNotification('Request successful', 'success');
     });
   }
 
+
+  showNotification(message: string, panelClass: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000, // Adjust as needed
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: [panelClass]
+    });
+  }
   resetTable() {
+
     this.dataSource.data = [];
   }
 
-  resetForm() {
-    this.requestForm.reset();
-  }
 }
+// insertRowIntoDatabase(rowData: any) {
+//   console.log('Inserting row data into database:', rowData);
+//   this.authService.insertRows(rowData).subscribe((rowDataresponse) => {
+//     console.log('Insert successful:', rowDataresponse);
+
+//     // Reset table and form
+//     this.resetTable();
+//     this.resetForm();
+//   });
+// }
+
+// resetTable() {
+//   this.dataSource.data = [];
+// }
+
+// resetForm() {
+//   this.requestForm.reset();
+// }
+
+
