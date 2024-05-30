@@ -229,6 +229,7 @@ export class RequestComponent implements OnInit, AfterViewInit {
 
       this.insertRowIntoDatabase(rowData);
     });
+    this.selection.clear();
   }
 
   insertRowIntoDatabase(rowData: any) {
@@ -243,20 +244,46 @@ export class RequestComponent implements OnInit, AfterViewInit {
       this.showNotification('Request successful', 'success');
     });
   }
+  showNotification(message: string, panelClass: string, duration: number = 3000) {
+    if (!message) {
+      console.error('Notification message is required.');
+      return;
+    }
 
+    if (typeof duration !== 'number' || duration <= 0) {
+      console.warn('Invalid duration specified. Using default value of 3000ms.');
+      duration = 3000;
+    }
 
-  showNotification(message: string, panelClass: string) {
     this.snackBar.open(message, 'Close', {
-      duration: 3000, // Adjust as needed
+      duration: duration,
       horizontalPosition: 'right',
       verticalPosition: 'top',
-      panelClass: [panelClass]
+      panelClass: [panelClass || 'default-snackbar']
     });
   }
-  resetTable() {
 
-    this.dataSource.data = [];
+  resetTable() {
+    if (this.dataSource && this.dataSource.data) {
+      this.dataSource.data = [];
+    } else {
+      console.warn('DataSource is not defined or has no data property.');
+    }
   }
+
+
+  // showNotification(message: string, panelClass: string) {
+  //   this.snackBar.open(message, 'Close', {
+  //     duration: 3000,
+  //     horizontalPosition: 'right',
+  //     verticalPosition: 'top',
+  //     panelClass: [panelClass]
+  //   });
+  // }
+  // resetTable() {
+
+  //   this.dataSource.data = [];
+  // }
 
 }
 // insertRowIntoDatabase(rowData: any) {
