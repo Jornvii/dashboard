@@ -7,6 +7,7 @@ import {
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Data } from '@angular/router';
+import { RequestData } from '../list-request/list-request.component';
 @Injectable({
   providedIn: 'root',
 })
@@ -72,6 +73,9 @@ export class AuthService {
 
  Get_ReqData(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/Post_Detail`, data);
+  }
+  getRequestData(): Observable<RequestData[]> {
+    return this.http.get<RequestData[]>(this.apiUrl);
   }
 
 

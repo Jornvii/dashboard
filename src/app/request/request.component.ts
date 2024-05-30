@@ -173,47 +173,11 @@ export class RequestComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // onSubmit() {
-  //   const OPIST_PartNo = this.requestForm.get('OPIST_PartNo')?.value;
-  //   const OPIST_Process = this.requestForm.get('OPIST_Process')?.value;
-  //   const OPIST_MC = this.requestForm.get('OPIST_MC')?.value;
-
-  //   if (OPIST_PartNo && OPIST_Process && OPIST_MC) {
-  //     const data = { OPIST_PartNo, OPIST_Process, OPIST_MC };
-  //     this.authService.Post_ToolDetial(data).subscribe({
-  //       next: (response) => {
-  //         if (response.length > 0 && response[0].length > 0) {
-  //           this.dataSource.data = response[0] as ToolDetail[];
-  //         }
-  //       },
-  //     });
-  //   }
-  // }
-
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
-
-  toggleAllRows() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
-    }
-
-    this.selection.select(...this.dataSource.data);
-  }
-  // toggleAllRows() {
-  //   if (this.isAllSelected()) {
-  //     this.selection.clear();
-  //     return;
-  //   }
-
-  //   const selectedRows = this.dataSource.data.filter(row => this.selection.isSelected(row));
-  //   selectedRows.forEach(row => console.log(row));
-  //   this.selection.select(...this.dataSource.data);
-  // }
 
   checkboxLabel(row?: ToolDetail): string {
     if (!row) {
@@ -232,21 +196,16 @@ export class RequestComponent implements OnInit, AfterViewInit {
       console.log('Selected Row Data:', row);
     }
   }
-  // insertRowIntoDatabase(rowData: any) {
-  //   // Replace this with your actual database insertion logic
-  //   this.authService.insertRows(rowData).subscribe(
-  //     (response) => {
-  //       console.log('Data inserted successfully:', response);
-  //       this.requestForm.reset();
-  //     },
-  //     (error) => {
-  //       console.error('Error inserting data into the database:', error);
-  //       // Handle the error appropriately
-  //     }
-  //   );
-  // }
 
-  ///////////////////////////////////////
+  toggleAllRows() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+
+    this.selection.select(...this.dataSource.data);
+  }
+
   insertSelectedRows() {
     const selectedRows = this.selection.selected;
 
@@ -287,35 +246,3 @@ export class RequestComponent implements OnInit, AfterViewInit {
     this.requestForm.reset();
   }
 }
-
-
-
-
-
-  // this.authService.insertRows(rowData).subscribe(
-  //   (insertRowsresponse) => {
-  //     console.log('Data inserted successfully:', insertRowsresponse);
-
-  //   })
-
-
-// onInsertSelectedRows() {
-//   const selectedRows = this.selection.selected;
-//   const additionalData = {
-//     _Division: this._Division,
-//     Revision: this.requestForm.get('Revision')?.value,
-//     Case_: this.Case_,
-//     dateOfReq: this.requestForm.get('dateOfReq')?.value,
-//   };
-
-//   const dataToInsert = selectedRows.map(row => ({
-//     ...row,
-//     ...additionalData
-//   }));
-
-//   this.authService.insertSelectedRows(dataToInsert).subscribe(response => {
-//     console.log('Insert successful:', response);
-//   }, error => {
-//     console.error('Insert failed:', error);
-//   });
-// }

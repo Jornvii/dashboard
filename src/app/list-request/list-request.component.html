@@ -1,73 +1,127 @@
-/Post_Detail
+
 <div class="container">
 
 <h3 style="text-align: center; font-weight: 900;font-size: 18px;">List Request</h3>
 
 
 
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-  <!-- 1. NO Column -->
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-  </ng-container>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="mat-table">
 
-  <!-- 2Date Request -->
-  <ng-container matColumnDef="datereq">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Req. </th>
-    <td mat-cell *matCellDef="let element"> {{element.datereq}} </td>
-  </ng-container>
-  <!-- 3Doc Column -->
-  <ng-container matColumnDef="part">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Doc NO. </th>
-    <td mat-cell *matCellDef="let element"> {{element.part}} </td>
-  </ng-container>
+    <!-- Case_ Column -->
+    <ng-container matColumnDef="Case_">
+      <th mat-header-cell *matHeaderCellDef> Case </th>
+      <td mat-cell *matCellDef="let element"> {{element.Case_}} </td>
+    </ng-container>
 
-  <!--4 Part Number Column -->
-  <ng-container matColumnDef="mc">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Part No </th>
-    <td mat-cell *matCellDef="let element"> {{element.mc}} </td>
-  </ng-container>
-<!--5 proces Column -->
-  <ng-container matColumnDef="process">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Process </th>
-    <td mat-cell *matCellDef="let element"> {{element.process}} </td>
-  </ng-container>
+    <!-- ITEM_NO Column -->
+    <ng-container matColumnDef="ITEM_NO">
+      <th mat-header-cell *matHeaderCellDef> Item No </th>
+      <td mat-cell *matCellDef="let element"> {{element.ITEM_NO}} </td>
+    </ng-container>
 
-<!--6 Area Column -->
-  <ng-container matColumnDef="area">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Area </th>
-    <td mat-cell *matCellDef="let element"> {{element.area}} </td>
-  </ng-container>
-<!--7 request by -->
-<ng-container matColumnDef="reqby">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Request by </th>
-    <td mat-cell *matCellDef="let element"> {{element.reqby}} </td>
-  </ng-container>
-<!--8 status  -->
-  <ng-container matColumnDef="status">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> status </th>
-    <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-  </ng-container>
+    <!-- MCNo Column -->
+    <ng-container matColumnDef="MCNo">
+      <th mat-header-cell *matHeaderCellDef> MC No </th>
+      <td mat-cell *matCellDef="let element"> {{element.MCNo}} </td>
+    </ng-container>
 
-  <!-- click to Issue Gauge  -->
+    <!-- OPIST_MC Column -->
+    <ng-container matColumnDef="OPIST_MC">
+      <th mat-header-cell *matHeaderCellDef> OPIST MC </th>
+      <td mat-cell *matCellDef="let element"> {{element.OPIST_MC}} </td>
+    </ng-container>
 
-  <ng-container matColumnDef="setgauge">
-    <th mat-header-cell *matHeaderCellDef>Set Gauge</th>
-    <td mat-cell *matCellDef="let element">
-      <button mat-icon-button color="Accent-green" (click)="element">
-        <mat-icon>add_circle</mat-icon>
-      </button>
-    </td>
-  </ng-container>
+    <!-- OPIST_PartNo Column -->
+    <ng-container matColumnDef="OPIST_PartNo">
+      <th mat-header-cell *matHeaderCellDef> OPIST Part No </th>
+      <td mat-cell *matCellDef="let element"> {{element.OPIST_PartNo}} </td>
+    </ng-container>
 
+    <!-- OPIST_Process Column -->
+    <ng-container matColumnDef="OPIST_Process">
+      <th mat-header-cell *matHeaderCellDef> OPIST Process </th>
+      <td mat-cell *matCellDef="let element"> {{element.OPIST_Process}} </td>
+    </ng-container>
 
+    <!-- OPIST_Usage_pcs Column -->
+    <ng-container matColumnDef="OPIST_Usage_pcs">
+      <th mat-header-cell *matHeaderCellDef> OPIST Usage pcs </th>
+      <td mat-cell *matCellDef="let element"> {{element.OPIST_Usage_pcs}} </td>
+    </ng-container>
 
+    <!-- Qty Column -->
+    <ng-container matColumnDef="Qty">
+      <th mat-header-cell *matHeaderCellDef> Qty </th>
+      <td mat-cell *matCellDef="let element"> {{element.Qty}} </td>
+    </ng-container>
 
+    <!-- Result1 Column -->
+    <ng-container matColumnDef="Result1">
+      <th mat-header-cell *matHeaderCellDef> Result1 </th>
+      <td mat-cell *matCellDef="let element"> {{element.Result1}} </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+    <!-- Result2 Column -->
+    <ng-container matColumnDef="Result2">
+      <th mat-header-cell *matHeaderCellDef> Result2 </th>
+      <td mat-cell *matCellDef="let element"> {{element.Result2}} </td>
+    </ng-container>
+
+    <!-- Result3 Column -->
+    <ng-container matColumnDef="Result3">
+      <th mat-header-cell *matHeaderCellDef> Result3 </th>
+      <td mat-cell *matCellDef="let element"> {{element.Result3}} </td>
+    </ng-container>
+
+    <!-- Result4 Column -->
+    <ng-container matColumnDef="Result4">
+      <th mat-header-cell *matHeaderCellDef> Result4 </th>
+      <td mat-cell *matCellDef="let element"> {{element.Result4}} </td>
+    </ng-container>
+
+    <!-- Result5 Column -->
+    <ng-container matColumnDef="Result5">
+      <th mat-header-cell *matHeaderCellDef> Result5 </th>
+      <td mat-cell *matCellDef="let element"> {{element.Result5}} </td>
+    </ng-container>
+
+    <!-- Result6 Column -->
+    <ng-container matColumnDef="Result6">
+      <th mat-header-cell *matHeaderCellDef> Result6 </th>
+      <td mat-cell *matCellDef="let element"> {{element.Result6}} </td>
+    </ng-container>
+
+    <!-- Revision Column -->
+    <ng-container matColumnDef="Revision">
+      <th mat-header-cell *matHeaderCellDef> Revision </th>
+      <td mat-cell *matCellDef="let element"> {{element.Revision}} </td>
+    </ng-container>
+
+    <!-- SPEC Column -->
+    <ng-container matColumnDef="SPEC">
+      <th mat-header-cell *matHeaderCellDef> SPEC </th>
+      <td mat-cell *matCellDef="let element"> {{element.SPEC}} </td>
+    </ng-container>
+
+    <!-- dateOfReq Column -->
+    <ng-container matColumnDef="dateOfReq">
+      <th mat-header-cell *matHeaderCellDef> Date Of Req </th>
+      <td mat-cell *matCellDef="let element"> {{element.dateOfReq}} </td>
+    </ng-container>
+
+    <!-- _Division Column -->
+    <ng-container matColumnDef="_Division">
+      <th mat-header-cell *matHeaderCellDef> Division </th>
+      <td mat-cell *matCellDef="let element"> {{element._Division}} </td>
+    </ng-container>
+
+    <!-- Header and Row Definitions -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
 
 <mat-paginator [pageSizeOptions]="[5, 25, 50]" showFirstLastButtons></mat-paginator>
 </div>
